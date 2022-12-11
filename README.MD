@@ -8,7 +8,7 @@ This is a simple app that allows you to use ToS;DR on your Android device.
 
 1. Install the app from the [Play Store](https://play.google.com/store/apps/details?id=xyz.ptgms.tosdr&pli=1), download the APK from the [releases page](https://github.com/tosdr/tosdr-android/releases), or build it yourself.
 2. Share a link of a Website to the App or search for it in the search tab.
-3. Done! You are not viewing the ToS;DR page for the website!
+3. Done! You are now viewing the ToS;DR page for the website!
 
 ## How to build
 
