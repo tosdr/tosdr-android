@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name" translatable="false">ToS;DR</string>
+
+    <!-- General UI -->
+    <string name="visit_source">Visit Source</string>
+    <string name="visit_website">Visit Website</string>
+    <string name="loading">Loading…</string>
+    <string name="done">Done!</string>
+    <string name="drop_down_arrow">Drop Down Arrow</string>
+    <string name="quote_from_policies">Quote from policies:</string>
+    <string name="clear">Clear</string>
+    <string name="menu">Menu</string>
+    <string name="back">Back</string>
+
+    <!-- Purchases -->
+    <string name="donation_thanks">Thank you for your donation!</string>
+    <string name="donation_cancelled">Purchase cancelled</string>
+    <string name="donation_failed">Purchase failed</string>
+    <string name="donation_error">Something went wrong, please try again later.</string>
+    <string name="donation_info">Donations are not required, but greatly appreciated.</string>
+    <string name="donation_info_card_title">Info</string>
+    <string name="donation_info_card_description">As the App only uses Data thoughtfully provided by ToS;DR, I pledge that 50% of all Donations will be donated onto the developers of the API.</string>
+    <string name="donation_thanks_1euro">Thank you for your Donation!</string>
+    <string name="donation_thanks_5euro">Thank you for your big Donation!</string>
+    <string name="donation_thanks_10euro">Thank you for your huge Donation!</string>
+    <string name="donate">Donate</string>
+
+    <!-- Settings -->
+    <string name="settings">Settings</string>
+    <string name="settings_search">Search Settings</string>
+    <string name="settings_search_hidenograde">Hide sites with no grade</string>
+    <string name="settings_search_hidenoreview">Hide sites that aren\'t comprehensively reviewed</string>
+    <string name="settings_localisation">Localisation</string>
+    <string name="settings_deepl" translatable="false">DeepL</string>
+    <string name="settings_deepl_description">Notice: May be inaccurate and incredibly slow.\nUnsupported: Arabic</string>
+    <string name="settings_deepl_key">DeepL API key</string>
+    <string name="settings_localise_points_in_services">Localise points in services</string>
+    <string name="settings_libretranslate" translatable="false">LibreTranslate</string>
+    <string name="settings_libretranslate_description">Notice: Can be extremely inaccurate\nMight be offline</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+
+    <!-- About -->
+    <string name="about">About</string>
+    <string name="about_tos_dr">About ToS;DR</string>
+    <string name="about_tosdr_description">ToS;DR for Android is an client for popular Website and Extension named \"ToS;DR\"</string>
+    <string name="about_card_about_title">About this App</string>
+    <string name="about_card_about_description">This app has been programmed by ptgms Industries. It is fully open-source.</string>
+    <string name="about_card_tosdr_description">To see the contributor list for the Website and Extension, please visit the Website with the Button below.</string>
+    <!-- Search -->
+    <string name="search">Search</string>
+    <string name="search_label">Enter website name</string>
+    <string name="search_label_placeholder">Google, Facebook, …</string>
+
+    <!-- Details -->
+    <string name="detail_review_true_title">This Service is reviewed!</string>
+    <string name="detail_review_true_description">This service received a comprehensible amount of reviews and thus an accurate grade can be shown.</string>
+    <string name="detail_review_false_title">This Service is unreviewed!</string>
+    <string name="detail_review_false_description">There are not enough reviews and cases to have an accurate grade.</string>
+    <string name="details_known_urls">Known URLs for %s</string>
+    <string name="details_icon">Icon for %s</string>
+    <string name="details_reviewed">Reviewed</string>
+    <string name="details_not_reviewed">Not Reviewed</string>
+    <string name="details_grade">Grade: %s</string>
+    <string name="details_saved_urls">Saved URLs: %s</string>
+    <string name="details_cases">Cases: %s</string>
+    <string name="details_view_on_page">View on ToS;DR</string>
+
+    <!-- Home -->
+    <string name="home_welcome">Welcome to ToS;DR!</string>
+    <string name="home_card_what_is_this_title">What is this?</string>
+    <string name="home_card_what_is_this_description">This app allows you to view a short and abridged version of a specific websites\' Terms of Service and Privacy Policy.</string>
+    <string name="home_card_how_to_use_title">How to use</string>
+    <string name="home_card_how_to_use_description">You can either \"Share\" a Website to this App or use the Search function in the app.</string>
+    <string name="home_card_like_title">Like what you are seeing?</string>
+    <string name="home_card_like_description">Make sure to check out the \"About\" and \"Donate\" tab.</string>
+    <string name="home_card_legal_title">Legal disclaimer</string>
+
+    <!-- Dialog -->
+    <string name="dialog_open_question">Open ToS;DR Page?</string>
+    <string name="dialog_open_website">Website: %s</string>
+    <string name="dialog_open_noresults">No results found</string>
+    <string name="home_card_legal_description">Nothing here should be considered legal advice. We express our opinion with no guarantee and we do not endorse any service in any way. Please refer to a qualified attorney for legal advice. Reading ToS;DR is in no way a replacement for reading the full terms to which you are bound.</string>
+
+    <!-- Drawer -->
+    <string name="navigation">Navigation</string>
+    <string name="home">Home</string>
+
+    <!-- Crash -->
+    <string name="crash_text">Please send a crash report so I can fix this issue. I value your privacy, feel free to preview and redact things in the log before sending them.</string>
+    <string name="crash_title">Oh no, the App crashed!</string>
+    <string name="crash_comment">Add a comment, steps to reproduce or, if applicable, the site you opened.</string>
+    <string name="network_error">Error! Are you connected to the internet?</string>
+
+</resources>

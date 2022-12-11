@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General UI -->
+    <string name="visit_source">زيارة المصدر</string>
+    <string name="visit_website">زيارة الموقع</string>
+    <string name="loading">جاري التحميل…</string>
+    <string name="done">تم!</string>
+    <string name="drop_down_arrow">سهم عرض التفاصيل</string>
+    <string name="quote_from_policies">اقتباس من السياسات:</string>
+    <string name="clear">تفريغ</string>
+    <string name="menu">القائمة</string>
+    <string name="back">عودة</string>
+    <!-- Purchases -->
+    <string name="donation_thanks">شكرا لتبرعك!</string>
+    <string name="donation_cancelled">تم إلغاء الشراء</string>
+    <string name="donation_failed">فشل الشراء</string>
+    <string name="donation_error">حدث خطأ ما، يرجى المحاولة مرة أخرى لاحقاً.</string>
+    <string name="donation_info">التبرعات ليست مطلوبة، لكنها مقدّرة كثيرا.</string>
+    <string name="donation_info_card_title">معلومات</string>
+    <string name="donation_info_card_description">حيث أن التطبيق يستخدم فقط البيانات المقدمة عن طريق ToS;DR، أتعهد بالتبرع بنسبة 50 في المائة من جميع التبرعات لمطوري API.</string>
+    <string name="donation_thanks_1euro">شكرا لتبرعك!</string>
+    <string name="donation_thanks_5euro">شكرا لتبرعك الكبير!</string>
+    <string name="donation_thanks_10euro">شكرا لتبرعك الضخم!</string>
+    <string name="donate">تبرّع</string>
+    <!-- Settings -->
+    <string name="settings">الإعدادت</string>
+    <string name="settings_search">إعدادات البحث</string>
+    <string name="settings_search_hidenograde">إخفاء المواقع بدون درجة</string>
+    <string name="settings_search_hidenoreview">إخفاء المواقع التي لم يتم مراجعتها بشكل شامل</string>
+    <string name="settings_localisation">الاعدادات الأقليمية</string>
+    <string name="settings_deepl_description">ملاحظة: قد تكون غير دقيقة وبطيئة بشكل لا يصدق.\nغير مدعوم: العربية</string>
+    <string name="settings_deepl_key">مفتاح API DeepL</string>
+    <string name="settings_localise_points_in_services">نقاط التوطين في الخدمات</string>
+    <string name="settings_libretranslate_description">ملاحظة: يمكن أن يكون غير دقيق للغاية\nقد يكون غير متصل</string>
+    <!-- About -->
+    <string name="open_source_licenses">"تراخيص المصدر المفتوح "</string>
+    <string name="about">حول التطبيق</string>
+    <string name="about_tos_dr">حول ToS;DR</string>
+    <string name="about_tosdr_description">ToS;DR للأندرويد هو عميل لموقع ويب وملحقات شعبية تسمى \"ToS;DR\"</string>
+    <string name="about_card_about_title">حول هذا التطبيق</string>
+    <string name="about_card_about_description">تم برمجة هذا التطبيق من قبل صناعات ptgms ، وهو مفتوح المصدر بالكامل.</string>
+    <string name="about_card_tosdr_description">لمشاهدة قائمة المساهمين للموقع على الشبكة والمكانة الإضافية، يرجى زيارة الموقع من الزر أدناه.</string>
+    <!-- Search -->
+    <string name="search">البحث</string>
+    <string name="search_label">أدخل اسم الموقع</string>
+    <string name="search_label_placeholder">جوجل، فيسبوك، …</string>
+    <!-- Details -->
+    <string name="detail_review_true_title">تم مراجعة هذه الخدمة!</string>
+    <string name="detail_review_true_description">وحصلت هذه الخدمة على قدر من الاستعراضات جيد ومن ثم يمكن إظهار درجة دقيقة.</string>
+    <string name="detail_review_false_title">هذه الخدمة غير مراجعة!</string>
+    <string name="detail_review_false_description">ليس هناك ما يكفي من الاستعراضات والحالات للحصول على درجة دقيقة.</string>
+    <string name="details_known_urls">عناوين URL المعروفة لـ %s</string>
+    <string name="details_icon">أيقونة ل %s</string>
+    <string name="details_reviewed">مُراجَع</string>
+    <string name="details_not_reviewed">لم يتم مراجعته</string>
+    <string name="details_grade">الدرجة: %s</string>
+    <string name="details_saved_urls">عناوين URL المحفوظة: %s</string>
+    <string name="details_cases">الحالات: %s</string>
+    <string name="details_view_on_page">عرض في ToS;DR</string>
+    <!-- Home -->
+    <string name="home_welcome">مرحبا بكم في ToS;DR!</string>
+    <string name="home_card_what_is_this_title">ما هذا؟</string>
+    <string name="home_card_what_is_this_description">يتيح لك هذا التطبيق عرض نسخة قصيرة ومختصرة من شروط الخدمة وسياسة الخصوصية لمواقع محددة.</string>
+    <string name="home_card_how_to_use_title">طريقة الاستخدام</string>
+    <string name="home_card_how_to_use_description">يمكنك إما \"مشاركة\" موقع ويب لهذا التطبيق أو استخدام وظيفة البحث في التطبيق.</string>
+    <string name="home_card_like_title">هل بعجبك ما تراه؟</string>
+    <string name="home_card_like_description">تأكد من التحقق من قسم \"حول التطبيق\" و \"التبرع\".</string>
+    <string name="home_card_legal_title">إخلاء المسؤولية القانونية</string>
+    <!-- Dialog -->
+    <string name="dialog_open_question">فتح صفحة ToS;DR ؟</string>
+    <string name="dialog_open_website">الموقع: %s</string>
+    <string name="dialog_open_noresults">لم يتم العثور على أي نتائج</string>
+    <string name="home_card_legal_description">لا ينبغي اعتبار أي شيء هنا مشورة قانونية، ونحن نعرب عن رأينا بدون ضمان، ولا نؤيد أي خدمة بأي شكل من الأشكال. يرجى الرجوع إلى محام مؤهل للحصول على المشورة القانونية. قراءة ToS;DR ليست بأي حال من الأحوال بديلاً لقراءة المصطلحات التي تلتزم بها.</string>
+    <!-- Drawer -->
+    <string name="navigation">التصفح</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <!-- Crash -->
+    <string name="crash_text">الرجاء إرسال تقرير عن الأعطال حتى يمكنني إصلاح هذه المشكلة. أنا أقدر خصوصيتك، لا تتردد في معاينة وتحرير الأشياء في السجل قبل إرسالها.</string>
+    <string name="crash_title">أوه لا، تعطل التطبيق!</string>
+    <string name="crash_comment">أضف تعليقاً, خطوات لاستنساخ أو، إذا كان ذلك ممكناً, الموقع الذي فتحته.</string>
+    <string name="network_error">خطأ! هل أنت متصل بالإنترنت؟</string>
+</resources>

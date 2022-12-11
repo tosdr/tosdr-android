@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General UI -->
+    <string name="visit_source">Bezoek Bron</string>
+    <string name="visit_website">Bezoek de Website</string>
+    <string name="loading">Bezig met laden…</string>
+    <string name="done">Gereed!</string>
+    <string name="drop_down_arrow">Naar beneden Pijl</string>
+    <string name="quote_from_policies">Citaat uit beleid:</string>
+    <string name="clear">Wissen</string>
+    <string name="menu">Menu</string>
+    <string name="back">Terug</string>
+    <!-- Purchases -->
+    <string name="donation_thanks">Hartelijk dank voor uw donatie!</string>
+    <string name="donation_cancelled">Aankoop geannuleerd</string>
+    <string name="donation_failed">Aankoop mislukt</string>
+    <string name="donation_error">Er is iets fout gegaan. Probeer het later opnieuw.</string>
+    <string name="donation_info">Donaties zijn niet vereist, maar wel zeer gewaardeerd.</string>
+    <string name="donation_info_card_title">Info</string>
+    <string name="donation_info_card_description">De app maakt zorgvuldig gebruik van data door ToS;DR, ik beloof dat 50% van alle donaties zal worden gedoneerd aan de ontwikkelaars van de API.</string>
+    <string name="donation_thanks_1euro">Hartelijk dank voor de donatie!</string>
+    <string name="donation_thanks_5euro">Hartelijk dank voor de grote donatie!</string>
+    <string name="donation_thanks_10euro">Hartelijk dank voor de reusachtige donatie!</string>
+    <string name="donate">Doneren</string>
+    <!-- Settings -->
+    <string name="settings">Instellingen</string>
+    <string name="settings_search">Zoekinstellingen</string>
+    <string name="settings_search_hidenograde">Verberg websites zonder beoordeling</string>
+    <string name="settings_search_hidenoreview">Sites die niet volledig zijn gereviewd verbergen</string>
+    <string name="settings_localisation">Lokalisatie</string>
+    <string name="settings_deepl_description">Let op: kan onnauwkeurig en ongelooflijk langzaam zijn.\nNiet ondersteund: Arabisch</string>
+    <string name="settings_deepl_key">DeepL API-sleutel</string>
+    <string name="settings_localise_points_in_services">Lokaliseer punten in diensten</string>
+    <string name="settings_libretranslate_description">Let op: Kan extreem onnauwkeurig zijn\n Is mogelijk niet online</string>
+    <!-- About -->
+    <string name="about">Over</string>
+    <string name="about_tos_dr">Over ToS;DR</string>
+    <string name="about_tosdr_description">ToS;DR voor Android is een client voor de populaire Website en Extensie genaamd \"ToS;DR\"</string>
+    <string name="about_card_about_title">Over deze app</string>
+    <string name="about_card_about_description">Deze app was geprogrammeerd door Ptgms Industries. Het is volledig open source.</string>
+    <string name="about_card_tosdr_description">Om de lijst van bijdragers voor de Website en Extensie te zien, bezoek alstublieft de Website met de onderstaande knop.</string>
+    <!-- Search -->
+    <string name="search">Zoeken</string>
+    <string name="search_label">Voer het adres van de website in</string>
+    <string name="search_label_placeholder">Google, Facebook, …</string>
+    <!-- Details -->
+    <string name="detail_review_true_title">Deze Dienst is beoordeeld!</string>
+    <string name="detail_review_true_description">Deze service heeft een begrijpelijke hoeveelheid beoordelingen ontvangen en kan dus een nauwkeurige beoordeling geven.</string>
+    <string name="detail_review_false_title">Deze Dienst is nog niet beoordeeld!</string>
+    <string name="detail_review_false_description">Er zijn niet genoeg beoordelingen en gevallen om een nauwkeurige beoordeling te krijgen.</string>
+    <string name="details_known_urls">Bekende URL\'s voor %s</string>
+    <string name="details_icon">Pictogram voor %s</string>
+    <string name="details_reviewed">Beoordeeld</string>
+    <string name="details_not_reviewed">Niet beoordeeld</string>
+    <string name="details_grade">Beoordeling: %s</string>
+    <string name="details_saved_urls">Opgeslagen URL\'s: %s</string>
+    <string name="details_cases">Gevallen: %s</string>
+    <string name="details_view_on_page">Bekijk op ToS;DR</string>
+    <!-- Home -->
+    <string name="home_welcome">Welkom bij ToS;DR!</string>
+    <string name="home_card_what_is_this_title">Wat is dit?</string>
+    <string name="home_card_what_is_this_description">Met deze app kunt u een korte en ingetrokken versie bekijken van een specifieke websites gebruiksvoorwaarden en privacybeleid.</string>
+    <string name="home_card_how_to_use_title">Gebruiksaanwijzing</string>
+    <string name="home_card_how_to_use_description">U kunt een website naar deze app \"Delen\" of de zoekfunctie in de app gebruiken.</string>
+    <string name="home_card_like_title">Vind je het leuk wat je ziet?</string>
+    <string name="home_card_like_description">Bezoek het tabblad \"Over\" en \"Doneren\" een keer.</string>
+    <string name="home_card_legal_title">Wettelijk disclaimer</string>
+    <!-- Dialog -->
+    <string name="dialog_open_question">Open de ToS;DR Pagina?</string>
+    <string name="dialog_open_website">Website: %s</string>
+    <string name="dialog_open_noresults">Geen zoekresultaten gevonden</string>
+    <string name="home_card_legal_description">Wij geven onze mening zonder wettelijke garantie en staan op geen enkele manier achter een dienst. Raadpleeg alstublieft een gekwalificeerde advocaat voor juridisch advies. Lezen van ToS;DR is in geen geval een vervanging voor het lezen van de volledige termen waaraan u gebonden bent.</string>
+    <!-- Drawer -->
+    <string name="navigation">Navigatie</string>
+    <string name="home">Startpagina</string>
+    <!-- Crash -->
+    <string name="crash_text">Stuur alstublieft een crashrapport zodat ik dit probleem kan verhelpen. Ik hecht waarde aan uw privacy, voel vrij om dingen te bekijken en te redigeren in het logboek voordat je ze verstuurt.</string>
+    <string name="crash_title">Oeps, de app is vastgelopen!</string>
+    <string name="crash_comment">Voeg een opmerking toe, stappen om te reproduceren of, indien van toepassing, de site die je hebt geopend.</string>
+    <string name="network_error">Er is iets fout gegaan. Bent u verbonden met het internet?</string>
+    <string name="open_source_licenses">Opensourcelicenties</string>
+</resources>
