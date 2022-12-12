@@ -37,6 +37,7 @@ data class Point(
 @Keep
 data class SearchResult(
     val name: String,
+    val icon: String?,
     val page: String,
     val grade: String
 )

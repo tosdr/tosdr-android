@@ -243,7 +243,7 @@ object API {
             if (grade == "N/A" && hideGrade) {
                 continue
             }
-            searchResults.add(SearchResult(name, service.id.toInt().toString(), grade))
+            searchResults.add(SearchResult(name, "https://s3.tosdr.org/logos/%s.png".format(service.id), service.id.toInt().toString(), grade))
         }
 
         return searchResults

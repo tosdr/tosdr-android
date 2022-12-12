@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Divider
@@ -74,6 +75,7 @@ import xyz.ptgms.tosdr.ui.views.ToSDRAboutView
 import xyz.ptgms.tosdr.ui.views.ToSDRDetailView.ToSDRDetailView
 import xyz.ptgms.tosdr.ui.views.ToSDRDonateView
 import xyz.ptgms.tosdr.ui.views.ToSDRHomeView
+import xyz.ptgms.tosdr.ui.views.ToSDRInstalledView.ToSDRInstalledView
 import xyz.ptgms.tosdr.ui.views.ToSDRLicensesView
 import xyz.ptgms.tosdr.ui.views.ToSDRSearchView
 import xyz.ptgms.tosdr.ui.views.ToSDRSettingsView
@@ -209,6 +211,7 @@ class MainActivity : ComponentActivity() {
         val items: List<NavigationItem> = listOf(
             NavigationItem(stringResource(R.string.home), Icons.Default.Home, "home"),
             NavigationItem(stringResource(R.string.search), Icons.Default.Search, "search"),
+            NavigationItem("Apps", Icons.Default.List, "apps"),
             //NavigationItem("Test Search", Icons.Default.Search, "details/182/E"),
         )
 
@@ -359,6 +362,9 @@ class MainActivity : ComponentActivity() {
                             scope = scope,
                             drawerState = drawerState
                         )
+                    }
+                    composable("apps") {
+                        ToSDRInstalledView(modifier = Modifier, scope = scope, drawerState = drawerState)
                     }
                     composable("details/{id}/{grade}") { backStackEntry ->
                         ToSDRDetailView(

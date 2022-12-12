@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" /> <!-- Required for Android 11+ -->
     <application
         android:name=".Application"
         android:allowBackup="true"
@@ -15,6 +17,7 @@
         android:theme="@style/Theme.ToSDR"
         android:localeConfig="@xml/locales_config"
         tools:targetApi="tiramisu">
+
         <activity
             android:name="xyz.ptgms.tosdr.MainActivity"
             android:exported="true"
