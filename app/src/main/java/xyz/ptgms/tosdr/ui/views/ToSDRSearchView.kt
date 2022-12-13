@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -38,6 +40,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -50,15 +53,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import xyz.ptgms.tosdr.R
-import xyz.ptgms.tosdr.tools.data.api.API.searchPage
 import xyz.ptgms.tosdr.tools.data.GradeToHumanReadable.gradeBackground
 import xyz.ptgms.tosdr.tools.data.GradeToHumanReadable.gradeForeground
 import xyz.ptgms.tosdr.tools.data.SearchResult
-import java.lang.Exception
+import xyz.ptgms.tosdr.tools.data.api.API.searchPage
 import kotlin.concurrent.thread
 
 object ToSDRSearchView : ViewModel() {
@@ -189,6 +193,18 @@ object ToSDRSearchView : ViewModel() {
 
         }) {
             Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(SearchResult.icon)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.placeholder),
+                    error = painterResource(R.drawable.baseline_broken_image_24),
+                    contentDescription = stringResource(R.string.details_icon, SearchResult.name),
+                    modifier = Modifier.clip(shape = RoundedCornerShape(8.dp))
+                        .size(48.dp)
+                        .padding(8.dp)
+                )
                 Text(text = SearchResult.name, fontSize = 20.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier
                     .weight(1f)
                     .padding(12.dp))

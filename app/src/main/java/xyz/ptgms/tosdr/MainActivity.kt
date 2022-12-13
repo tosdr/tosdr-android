@@ -364,7 +364,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable("apps") {
-                        ToSDRInstalledView(modifier = Modifier, scope = scope, drawerState = drawerState)
+                        ToSDRInstalledView(modifier = Modifier, scope = scope, drawerState = drawerState, navController= navController)
                     }
                     composable("details/{id}/{grade}") { backStackEntry ->
                         ToSDRDetailView(

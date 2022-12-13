@@ -55,6 +55,8 @@ object ToSDRSettingsView {
         val hideNotReviewed = remember { mutableStateOf(sharedPreference.getBoolean("hideNotReviewed", false)) }
         val localisePoints = remember { mutableStateOf(sharedPreference.getBoolean("localisePoints", false)) }
         val deepLSelected = remember { mutableStateOf(sharedPreference.getBoolean("deepLSelected", false)) }
+
+        val packageNameShown = remember { mutableStateOf(sharedPreference.getBoolean("packageNameShown", false)) }
         //val showSeverity = remember { mutableStateOf(sharedPreference.getBoolean("showSeverity", false)) }
 
         val deepLkey = remember { mutableStateOf(sharedPreference.getString("deeplKey", "")) }
@@ -86,6 +88,31 @@ object ToSDRSettingsView {
                     .verticalScroll(rememberScrollState())
                     .padding(padding)
             ) {
+                Text(
+                    text = "Appearance Settings",
+                    modifier = Modifier.padding(16.dp)
+                )
+                ElevatedCard(modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth(), onClick = {
+                    packageNameShown.value = !packageNameShown.value
+                    sharedPreference.edit().putBoolean("packageNameShown", packageNameShown.value).apply()
+                }) {
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Show package name in Installed Apps",
+                            modifier = Modifier.weight(1f)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Switch(checked = packageNameShown.value, onCheckedChange = {
+                            packageNameShown.value = it
+                            sharedPreference.edit().putBoolean("packageNameShown", it).apply()
+                        })
+                    }
+                }
                 Text(
                     text = stringResource(R.string.settings_search),
                     modifier = Modifier.padding(16.dp)
