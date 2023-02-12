@@ -1,6 +1,7 @@
 package xyz.ptgms.tosdr.ui.views
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,11 +23,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -61,6 +64,9 @@ object ToSDRSettingsView {
 
         val deepLkey = remember { mutableStateOf(sharedPreference.getString("deeplKey", "")) }
 
+        // Experimental
+        val allApps = remember { mutableStateOf(sharedPreference.getBoolean("allApps", false)) }
+
         Scaffold(topBar = {
             TopAppBar(
                 title = {
@@ -88,29 +94,31 @@ object ToSDRSettingsView {
                     .verticalScroll(rememberScrollState())
                     .padding(padding)
             ) {
-                Text(
-                    text = "Appearance Settings",
-                    modifier = Modifier.padding(16.dp)
-                )
-                ElevatedCard(modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth(), onClick = {
-                    packageNameShown.value = !packageNameShown.value
-                    sharedPreference.edit().putBoolean("packageNameShown", packageNameShown.value).apply()
-                }) {
-                    Row(
-                        modifier = Modifier.padding(12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Show package name in Installed Apps",
-                            modifier = Modifier.weight(1f)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Switch(checked = packageNameShown.value, onCheckedChange = {
-                            packageNameShown.value = it
-                            sharedPreference.edit().putBoolean("packageNameShown", it).apply()
-                        })
+                if (allApps.value) {
+                    Text(
+                        text = "Appearance Settings",
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    ElevatedCard(modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(), onClick = {
+                        packageNameShown.value = !packageNameShown.value
+                        sharedPreference.edit().putBoolean("packageNameShown", packageNameShown.value).apply()
+                    }) {
+                        Row(
+                            modifier = Modifier.padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Show package name in Installed Apps",
+                                modifier = Modifier.weight(1f)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Switch(checked = packageNameShown.value, onCheckedChange = {
+                                packageNameShown.value = it
+                                sharedPreference.edit().putBoolean("packageNameShown", it).apply()
+                            })
+                        }
                     }
                 }
                 Text(
@@ -275,6 +283,33 @@ object ToSDRSettingsView {
                             text = stringResource(R.string.open_source_licenses),
                             modifier = Modifier.weight(1f)
                         )
+                    }
+                }
+                Text(
+                    text = stringResource(R.string.settings_experimental_features),
+                    modifier = Modifier.padding(16.dp)
+                )
+                ElevatedCard(modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth(), onClick = {
+                    allApps.value = !allApps.value
+                    sharedPreference.edit().putBoolean("allApps", allApps.value).apply()
+                }) {
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.settings_allapps),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Switch(checked = allApps.value, onCheckedChange = {
+                            allApps.value = it
+                            sharedPreference.edit().putBoolean("allApps", it).apply()
+                            // Show a toast telling the user to restart the app
+                            Toast.makeText(context, context.getString(R.string.restart_notice), Toast.LENGTH_LONG).show()
+                        })
                     }
                 }
             }

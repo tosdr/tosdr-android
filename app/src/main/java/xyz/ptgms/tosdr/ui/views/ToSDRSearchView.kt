@@ -199,7 +199,7 @@ object ToSDRSearchView : ViewModel() {
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.placeholder),
-                    error = painterResource(R.drawable.baseline_broken_image_24),
+                    error = painterResource(R.drawable.placeholder),
                     contentDescription = stringResource(R.string.details_icon, SearchResult.name),
                     modifier = Modifier.clip(shape = RoundedCornerShape(8.dp))
                         .size(48.dp)

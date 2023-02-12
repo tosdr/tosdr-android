@@ -19,7 +19,7 @@ This is a simple app that allows you to use ToS;DR on your Android device.
 
 ## How to contribute
 
-Feel free to open a pull request or an issue if you want to contribute to the project. If you want to add a new language, you can use the [CrowdIn](https://crowdin.com/project/tosdr-android).
+Feel free to open a pull request or an issue if you want to contribute to the project. If you want to add a new language, you can use the [Weblate](https://translate.tosdr.org/projects/android/).
 
 ## Is the app going to be on F-Droid?
 

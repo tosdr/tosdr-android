@@ -90,5 +90,9 @@
     <string name="crash_title">Oh no, the App crashed!</string>
     <string name="crash_comment">Add a comment, steps to reproduce or, if applicable, the site you opened.</string>
     <string name="network_error">Error! Are you connected to the internet?</string>
+    <string name="settings_experimental_features">Experimental features</string>
+    <string name="settings_allapps">Show \"All Apps\" to analyse privacy grades of your installed apps</string>
+    <string name="apps">Apps</string>
+    <string name="restart_notice">Restart App for changes to take effect.</string>
 
 </resources>

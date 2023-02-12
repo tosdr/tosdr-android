@@ -1,6 +1,7 @@
 package xyz.ptgms.tosdr
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -50,6 +51,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.intl.Locale
@@ -204,16 +206,22 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun DrawerLayout(billingClient: BillingClient) {
+        val sharedPreference = LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val allApps = sharedPreference.getBoolean("allApps", false)
+
         val navController = rememberNavController()
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
 
-        val items: List<NavigationItem> = listOf(
+        val items: List<NavigationItem> = mutableListOf(
             NavigationItem(stringResource(R.string.home), Icons.Default.Home, "home"),
             NavigationItem(stringResource(R.string.search), Icons.Default.Search, "search"),
-            NavigationItem("Apps", Icons.Default.List, "apps"),
             //NavigationItem("Test Search", Icons.Default.Search, "details/182/E"),
-        )
+        ).apply {
+            if (allApps) {
+                add(NavigationItem(stringResource(R.string.apps), Icons.Default.List, "apps"))
+            }
+        }
 
         val settingItems: List<NavigationItem> = listOf(
             NavigationItem(stringResource(R.string.settings), Icons.Default.Settings, "settings"),
