@@ -60,6 +60,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import xyz.ptgms.tosdr.R
