@@ -1,3 +1,5 @@
+package xyz.ptgms.tosdr.viewmodels
+
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +9,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import xyz.ptgms.tosdr.api.ToSDRRepository
-import xyz.ptgms.tosdr.api.models.AppDbEntry
 import xyz.ptgms.tosdr.api.models.ServiceBasic
 import xyz.ptgms.tosdr.api.models.ServiceDetail
 import kotlinx.coroutines.Dispatchers
@@ -22,10 +23,7 @@ class ToSDRViewModel : ViewModel() {
     
     private val _serviceDetails = MutableStateFlow<ServiceDetail?>(null)
     val serviceDetails: StateFlow<ServiceDetail?> = _serviceDetails
-    
-    private val _appDb = MutableStateFlow<List<AppDbEntry>>(emptyList())
-    val appDb: StateFlow<List<AppDbEntry>> = _appDb
-    
+
     data class DbStats(
         val lastUpdate: Long = 0L,
         val entryCount: Int = 0

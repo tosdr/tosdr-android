@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -18,6 +21,7 @@ import xyz.ptgms.tosdr.navigation.Screen
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,35 +75,61 @@ fun SearchScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(items = searchResults) { service ->
-                ElevatedCard(
-                    onClick = { 
-                        navController.navigate(Screen.ServiceDetails.createRoute(service.id))
-                    },
+        if (searchQuery.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ElevatedButton(
+                    onClick = { navController.navigate(Screen.About.route) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    ListItem(
-                        headlineContent = { Text(service.name) },
-                        supportingContent = { Text("Rating: ${service.rating}") },
-                        leadingContent = {
-                            AsyncImage(
-                                model = "https://s3.tosdr.org/logos/${service.id}.png",
-                                contentDescription = "${service.name} logo",
-                                modifier = Modifier.size(40.dp),
-                                error = painterResource(id = R.drawable.ic_service_placeholder),
-                                placeholder = painterResource(id = R.drawable.ic_service_placeholder)
-                            )
+                    Icon(Icons.Default.Info, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("About ToS;DR")
+                }
+
+                ElevatedButton(
+                    onClick = { navController.navigate(Screen.Settings.route) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Default.Settings, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Settings")
+                }
+            }
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(items = searchResults) { service ->
+                    ElevatedCard(
+                        onClick = { 
+                            navController.navigate(Screen.ServiceDetails.createRoute(service.id))
                         },
-                        trailingContent = {
-                            Text(
-                                if (service.is_comprehensively_reviewed) "Reviewed" else "Pending",
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        }
-                    )
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        ListItem(
+                            headlineContent = { Text(service.name) },
+                            supportingContent = { Text("Rating: ${service.rating}") },
+                            leadingContent = {
+                                AsyncImage(
+                                    model = "https://s3.tosdr.org/logos/${service.id}.png",
+                                    contentDescription = "${service.name} logo",
+                                    modifier = Modifier.size(40.dp),
+                                    error = painterResource(id = R.drawable.ic_service_placeholder),
+                                    placeholder = painterResource(id = R.drawable.ic_service_placeholder)
+                                )
+                            },
+                            trailingContent = {
+                                Text(
+                                    if (service.is_comprehensively_reviewed) "Reviewed" else "Pending",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }

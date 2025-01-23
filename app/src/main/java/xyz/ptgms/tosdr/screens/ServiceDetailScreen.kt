@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,11 +86,10 @@ fun ServiceDetailsScreen(serviceId: Int) {
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-//                        AssignmentChip(
-//                            selected = true,
-//                            onClick = { },
-//                            label = { Text(point.case.classification) }
-//                        )
+                        AssistChip(
+                            onClick = { },
+                            label = { Text(point.case.classification) }
+                        )
                     }
                 }
             }

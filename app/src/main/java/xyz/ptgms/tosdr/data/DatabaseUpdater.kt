@@ -2,9 +2,9 @@ package xyz.ptgms.tosdr.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import xyz.ptgms.tosdr.api.models.AppDbEntry
 import xyz.ptgms.tosdr.data.room.ServiceEntity
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 
 object DatabaseUpdater {
     private const val SEVEN_DAYS_IN_MILLIS = 7 * 24 * 60 * 60 * 1000L

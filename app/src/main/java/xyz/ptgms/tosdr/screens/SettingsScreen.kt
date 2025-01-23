@@ -1,10 +1,12 @@
 package xyz.ptgms.tosdr.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -13,6 +15,7 @@ import xyz.ptgms.tosdr.components.settings.SettingsGroup
 import xyz.ptgms.tosdr.components.settings.SettingsRow
 import xyz.ptgms.tosdr.components.settings.SettingsTitle
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -139,11 +142,16 @@ fun SettingsScreen() {
                             enabled = !isLoading
                         ) {
                             Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                modifier = Modifier.weight(1f),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
                             ) {
                                 Icon(Icons.Default.Refresh, contentDescription = null)
+                                Spacer(modifier = Modifier.width(4.dp))
                                 Text(if (isLoading) "Refreshing..." else "Refresh Database")
                                 if (isLoading) {
+                                    Spacer(modifier = Modifier.width(4.dp))
+
                                     CircularProgressIndicator(
                                         modifier = Modifier.size(16.dp),
                                         strokeWidth = 2.dp

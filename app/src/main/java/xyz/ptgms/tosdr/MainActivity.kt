@@ -24,6 +24,7 @@ import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import xyz.ptgms.tosdr.navigation.Screen
 import xyz.ptgms.tosdr.screens.*
 import xyz.ptgms.tosdr.ui.theme.ToSDRTheme
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 
 class MainActivity : ComponentActivity() {
     private lateinit var database: ToSDRDatabase
@@ -52,47 +53,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = currentBackStackEntry?.destination?.route
     
-    Scaffold(
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
-                    label = { Text("Search") },
-                    selected = currentRoute == Screen.Search.route,
-                    onClick = { navController.navigate(Screen.Search.route) }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Info, contentDescription = "About") },
-                    label = { Text("About") },
-                    selected = currentRoute == Screen.About.route,
-                    onClick = { navController.navigate(Screen.About.route) }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
-                    label = { Text("Settings") },
-                    selected = currentRoute == Screen.Settings.route,
-                    onClick = { navController.navigate(Screen.Settings.route) }
-                )
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Search.route
+    ) {
+        composable(Screen.Search.route) { SearchScreen(navController) }
+        composable(Screen.About.route) { AboutScreen() }
+        composable(Screen.Settings.route) { SettingsScreen() }
+        composable(Screen.ServiceDetails.route) { backStackEntry ->
+            val serviceId = backStackEntry.arguments?.getString("serviceId")?.toIntOrNull()
+            if (serviceId != null) {
+                ServiceDetailsScreen(serviceId = serviceId)
             }
-        }
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Search.route,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(Screen.Search.route) { SearchScreen(navController) }
-            composable(Screen.About.route) { AboutScreen() }
-           composable(Screen.Settings.route) { SettingsScreen() }
-           composable(Screen.ServiceDetails.route) { backStackEntry ->
-               val serviceId = backStackEntry.arguments?.getString("serviceId")?.toIntOrNull()
-               if (serviceId != null) {
-                   ServiceDetailsScreen(serviceId = serviceId)
-               }
-           }
         }
     }
 }
