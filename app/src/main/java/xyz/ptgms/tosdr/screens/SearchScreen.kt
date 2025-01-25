@@ -8,7 +8,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import xyz.ptgms.tosdr.R
+import xyz.ptgms.tosdr.components.settings.SettingsGroup
 import xyz.ptgms.tosdr.components.settings.SettingsRow
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import xyz.ptgms.tosdr.navigation.Screen
@@ -113,26 +116,68 @@ fun SearchScreen(navController: NavController) {
                         color = MaterialTheme.colorScheme.primary
                     )
 
-                    SettingsRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { navController.navigate(Screen.About.route) },
-                        leading = {
-                            Icon(
-                                Icons.Rounded.Info,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        },
-                        title = {
-                            Text("About ToS;DR")
-                        },
-                        trailing = {
-                            Icon(
-                                Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                contentDescription = null
-                            )
-                        }
-                    )
+                    SettingsGroup {
+                        SettingsRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { navController.navigate(Screen.About.route) },
+                            leading = {
+                                Icon(
+                                    Icons.Rounded.Info,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            title = {
+                                Text("About ToS;DR")
+                            },
+                            trailing = {
+                                Icon(
+                                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                        SettingsRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { navController.navigate(Screen.Team.route) },
+                            leading = {
+                                Icon(
+                                    Icons.Rounded.Person,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            title = {
+                                Text("Team")
+                            },
+                            trailing = {
+                                Icon(
+                                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                        SettingsRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { navController.navigate(Screen.Donate.route) },
+                            leading = {
+                                Icon(
+                                    Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            },
+                            title = {
+                                Text("Donate")
+                            },
+                            trailing = {
+                                Icon(
+                                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                    }
                 }
             } else {
                 LazyColumn(

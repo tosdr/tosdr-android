@@ -67,6 +67,8 @@ fun MainScreen() {
         ) {
             composable(Screen.Search.route) { SearchScreen(navController) }
             composable(Screen.About.route) { AboutScreen(navController) }
+            composable(Screen.Donate.route) { DonationScreen(navController) }
+            composable(Screen.Team.route) { TeamScreen(navController) }
             composable(Screen.Settings.route) { SettingsScreen(navController) }
             composable(Screen.ServiceDetails.route) { backStackEntry ->
                 val serviceId = backStackEntry.arguments?.getString("serviceId")?.toIntOrNull()
