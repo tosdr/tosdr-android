@@ -3,6 +3,7 @@ package xyz.ptgms.tosdr.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -18,10 +19,11 @@ import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(navController: NavController) {
     val context = LocalContext.current
     val viewModel: ToSDRViewModel = viewModel()
     val database = remember { ToSDRDatabase.getDatabase(context) }
@@ -39,7 +41,14 @@ fun SettingsScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {Text("Settings")}
+                navigationIcon = {
+                    IconButton(
+                        onClick = { navController.navigateUp() }
+                    ) {
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                title = { Text("Settings") }
             )
         }
     ) { padding ->

@@ -42,22 +42,24 @@ class ToSDRViewModel : ViewModel() {
                     _searchResults.value = it
                 }
             } else {
-                database.serviceDao().searchServices("%$query%")
-                    .collect { services ->
-                        val mappedResults = services.map { service ->
-                            ServiceBasic(
-                                id = service.id,
-                                name = service.name,
-                                urls = listOf(service.url),
-                                rating = service.rating,
-                                is_comprehensively_reviewed = true,
-                                updated_at = "",
-                                created_at = "",
-                                slug = ""
-                            )
+                launch(Dispatchers.IO) {
+                    database.serviceDao().searchServices("%$query%")
+                        .collect { services ->
+                            val mappedResults = services.map { service ->
+                                ServiceBasic(
+                                    id = service.id,
+                                    name = service.name,
+                                    urls = listOf(service.url),
+                                    rating = service.rating,
+                                    is_comprehensively_reviewed = true,
+                                    updated_at = "",
+                                    created_at = "",
+                                    slug = ""
+                                )
+                            }
+                            _searchResults.value = mappedResults
                         }
-                        _searchResults.value = mappedResults
-                    }
+                }
             }
         }
     }
