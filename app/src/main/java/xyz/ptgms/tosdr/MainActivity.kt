@@ -1,17 +1,22 @@
 package xyz.ptgms.tosdr
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.lifecycle.lifecycleScope
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,8 +33,10 @@ class MainActivity : ComponentActivity() {
     private val viewModel: ToSDRViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
+
         database = ToSDRDatabase.getDatabase(this)
         
         lifecycleScope.launch {
@@ -63,7 +70,9 @@ fun MainScreen() {
         NavHost(
             navController = navController,
             startDestination = Screen.Search.route,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
+                .navigationBarsPadding()
         ) {
             composable(Screen.Search.route) { SearchScreen(navController) }
             composable(Screen.About.route) { AboutScreen(navController) }

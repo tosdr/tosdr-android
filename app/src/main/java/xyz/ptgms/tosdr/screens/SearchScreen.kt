@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -63,179 +64,192 @@ fun SearchScreen(navController: NavController) {
             )
         }
     ) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    top = paddingValues.calculateTopPadding() - 32.dp,
-                    bottom = paddingValues.calculateBottomPadding()
-                )
+                .padding(paddingValues)
         ) {
-            SearchBar(
-            modifier = Modifier.fillMaxWidth(),
-            expanded = false,
-            onExpandedChange = {},
-            inputField = { 
-                SearchBarDefaults.InputField(
-                    query = searchQuery,
-                    onQueryChange = { 
-                        searchQuery = it
-                        if (it.isEmpty()) {
-                            viewModel.clearSearchResults()
-                        } else if (!preferServerSearch && it.length >= 2) {
-                            viewModel.searchServices(it, database, false)
-                        }
-                    },
-                    onSearch = { 
-                        keyboardController?.hide()
-                        if (preferServerSearch && it.length >= 2) {
-                            viewModel.searchServices(it, database, true)
-                        }
-                    },
-                    expanded = false,
-                    onExpandedChange = {},
-                    placeholder = { Text("Search for services...") },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
-                )
-            },
-            content = {}
-        )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+            ) {
+                if (searchQuery.isEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            "Quick Actions",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
 
-            if (searchQuery.isEmpty()) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text(
-                        "Quick Actions",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    SettingsGroup {
-                        SettingsRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = { navController.navigate(Screen.About.route) },
-                            leading = {
-                                Icon(
-                                    Icons.Rounded.Info,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
-                            title = {
-                                Text("About ToS;DR")
-                            },
-                            trailing = {
-                                Icon(
-                                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-                        SettingsRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = { navController.navigate(Screen.Team.route) },
-                            leading = {
-                                Icon(
-                                    Icons.Rounded.Person,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
-                            title = {
-                                Text("Team")
-                            },
-                            trailing = {
-                                Icon(
-                                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-                        SettingsRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = { navController.navigate(Screen.Donate.route) },
-                            leading = {
-                                Icon(
-                                    Icons.Rounded.Star,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
-                            title = {
-                                Text("Donate")
-                            },
-                            trailing = {
-                                Icon(
-                                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-                    }
-                }
-            } else {
-                LazyColumn(
-                    contentPadding = PaddingValues(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(items = searchResults) { service ->
-                        ElevatedCard(
-                            onClick = { 
-                                navController.navigate(Screen.ServiceDetails.createRoute(service.id))
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            ListItem(
-                                headlineContent = { 
-                                    Text(
-                                        service.name,
-                                        style = MaterialTheme.typography.titleMedium
+                        SettingsGroup {
+                            SettingsRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = { navController.navigate(Screen.About.route) },
+                                leading = {
+                                    Icon(
+                                        Icons.Rounded.Info,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                 },
-                                leadingContent = {
-                                    AsyncImage(
-                                        model = "https://s3.tosdr.org/logos/${service.id}.png",
-                                        contentDescription = "${service.name} logo",
-                                        modifier = Modifier
-                                            .size(48.dp)
-                                            .clip(RoundedCornerShape(25.dp)),
-                                        error = painterResource(id = R.drawable.ic_service_placeholder),
-                                        placeholder = painterResource(id = R.drawable.ic_service_placeholder)
+                                title = {
+                                    Text("About ToS;DR")
+                                },
+                                trailing = {
+                                    Icon(
+                                        Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                        contentDescription = null
+                                    )
+                                }
+                            )
+                            SettingsRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = { navController.navigate(Screen.Team.route) },
+                                leading = {
+                                    Icon(
+                                        Icons.Rounded.Person,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                 },
-                                trailingContent = {
-                                    AssistChip(
-                                        onClick = { },
-                                        label = {
-                                            Text(
-                                                service.rating,
-                                                style = MaterialTheme.typography.bodyMedium,
-                                            )
-                                        },
-                                        border = null,
-                                        colors = AssistChipDefaults.assistChipColors(
-                                            containerColor = when(service.rating) {
-                                                "A" -> ToSDRColorScheme.gradeA
-                                                "B" -> ToSDRColorScheme.gradeB
-                                                "C" -> ToSDRColorScheme.gradeC
-                                                "D" -> ToSDRColorScheme.gradeD
-                                                "E" -> ToSDRColorScheme.gradeE
-                                                else -> ToSDRColorScheme.gradeNA
-                                            },
-                                            labelColor = Color.White,
-                                        )
+                                title = {
+                                    Text("Team")
+                                },
+                                trailing = {
+                                    Icon(
+                                        Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                        contentDescription = null
+                                    )
+                                }
+                            )
+                            SettingsRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                onClick = { navController.navigate(Screen.Donate.route) },
+                                leading = {
+                                    Icon(
+                                        Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                },
+                                title = {
+                                    Text("Donate")
+                                },
+                                trailing = {
+                                    Icon(
+                                        Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                        contentDescription = null
                                     )
                                 }
                             )
                         }
                     }
+                } else {
+                    LazyColumn(
+                        contentPadding = PaddingValues(bottom = 80.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        item {
+                            Spacer(modifier = Modifier.height(2.dp))
+                        }
+                        items(items = searchResults) { service ->
+                            ElevatedCard(
+                                onClick = { 
+                                    navController.navigate(Screen.ServiceDetails.createRoute(service.id))
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                ListItem(
+                                    headlineContent = { 
+                                        Text(
+                                            service.name,
+                                            style = MaterialTheme.typography.titleMedium
+                                        )
+                                    },
+                                    leadingContent = {
+                                        AsyncImage(
+                                            model = "https://s3.tosdr.org/logos/${service.id}.png",
+                                            contentDescription = "${service.name} logo",
+                                            modifier = Modifier
+                                                .size(48.dp)
+                                                .clip(RoundedCornerShape(25.dp)),
+                                            error = painterResource(id = R.drawable.ic_service_placeholder),
+                                            placeholder = painterResource(id = R.drawable.ic_service_placeholder)
+                                        )
+                                    },
+                                    trailingContent = {
+                                        AssistChip(
+                                            onClick = { },
+                                            label = {
+                                                Text(
+                                                    service.rating,
+                                                    style = MaterialTheme.typography.bodyMedium,
+                                                )
+                                            },
+                                            border = null,
+                                            colors = AssistChipDefaults.assistChipColors(
+                                                containerColor = when(service.rating) {
+                                                    "A" -> ToSDRColorScheme.gradeA
+                                                    "B" -> ToSDRColorScheme.gradeB
+                                                    "C" -> ToSDRColorScheme.gradeC
+                                                    "D" -> ToSDRColorScheme.gradeD
+                                                    "E" -> ToSDRColorScheme.gradeE
+                                                    else -> ToSDRColorScheme.gradeNA
+                                                },
+                                                labelColor = Color.White,
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .align(Alignment.BottomCenter)
+//                    .navigationBarsPadding()
+                    .imePadding()
+            ) {
+                SearchBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    expanded = false,
+                    onExpandedChange = {},
+                    inputField = { 
+                        SearchBarDefaults.InputField(
+                            query = searchQuery,
+                            onQueryChange = { 
+                                searchQuery = it
+                                if (it.isEmpty()) {
+                                    viewModel.clearSearchResults()
+                                } else if (!preferServerSearch && it.length >= 2) {
+                                    viewModel.searchServices(it, database, false)
+                                }
+                            },
+                            onSearch = { 
+                                keyboardController?.hide()
+                                if (preferServerSearch && it.length >= 2) {
+                                    viewModel.searchServices(it, database, true)
+                                }
+                            },
+                            expanded = false,
+                            onExpandedChange = {},
+                            placeholder = { Text("Search for services...") },
+                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
+                        )
+                    },
+                    content = {}
+                )
             }
         }
     }
