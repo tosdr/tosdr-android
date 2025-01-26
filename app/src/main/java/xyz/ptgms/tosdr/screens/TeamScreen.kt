@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.*
@@ -20,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import dev.jeziellago.compose.markdowntext.MarkdownText
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -146,11 +146,10 @@ fun TeamMemberCard(member: TeamMember) {
             }
             
             Spacer(modifier = Modifier.height(12.dp))
-            
-            Text(
-                text = member.description,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Start
+
+            MarkdownText(
+                markdown = member.description,
+                style = MaterialTheme.typography.bodyMedium
             )
             
             if (!member.links.isEmpty) {

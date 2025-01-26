@@ -1,12 +1,18 @@
 package xyz.ptgms.tosdr.screens
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.ptgms.tosdr.ui.theme.ToSDRColorScheme
@@ -14,6 +20,20 @@ import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import coil.compose.AsyncImage
+import xyz.ptgms.tosdr.R
+import xyz.ptgms.tosdr.api.models.Point
+import xyz.ptgms.tosdr.components.points.PointsGroup
+import xyz.ptgms.tosdr.components.points.PointsRow
+import xyz.ptgms.tosdr.ui.theme.BadgeColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +55,17 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            val url = "https://tosdr.org/service/${serviceDetails?.id}"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            navController.context.startActivity(intent)
+                        }
+                    ) {
+                        Icon(painterResource(R.drawable.ic_rounded_open_in_browser_24), "Open in Browser")
+                    }
+                },
                 title = { Text(serviceDetails?.name ?: "Loading...") }
             )
         }
@@ -52,23 +83,40 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController) {
                         Column(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            Text(
-                                text = service.name,
-                                style = MaterialTheme.typography.headlineLarge,
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-                            
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp)
+                            // Service Header
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.fillMaxWidth()
                             ) {
-                                Column(
-                                    modifier = Modifier.padding(16.dp)
+                                AsyncImage(
+                                    model = "https://s3.tosdr.org/logos/${service.id}.png",
+                                    contentDescription = "${service.name} logo",
+                                    modifier = Modifier.size(75.dp),
+                                    error = painterResource(id = R.drawable.ic_service_placeholder),
+                                    placeholder = painterResource(id = R.drawable.ic_service_placeholder)
+                                )
+                                Spacer(modifier = Modifier.height(12.dp))
+                                Text(
+                                    text = service.name,
+                                    style = MaterialTheme.typography.headlineLarge
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                
+                                // Badges Row
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    modifier = Modifier.horizontalScroll(rememberScrollState())
                                 ) {
-                                    Text(
-                                        text = "Rating: ${service.rating}",
-                                        style = MaterialTheme.typography.titleLarge,
+                                    if (service.is_comprehensively_reviewed) {
+                                        Badge(
+                                            text = "Reviewed",
+                                            icon = rememberVectorPainter(Icons.Rounded.Check),
+                                            color = BadgeColors.green
+                                        )
+                                    }
+                                    Badge(
+                                        text = "Grade ${service.rating}",
+                                        icon = painterResource(R.drawable.ic_rounded_shield_24),
                                         color = when(service.rating) {
                                             "A" -> ToSDRColorScheme.gradeA
                                             "B" -> ToSDRColorScheme.gradeB
@@ -78,42 +126,38 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController) {
                                             else -> ToSDRColorScheme.gradeNA
                                         }
                                     )
-                                    Text(
-                                        text = if (service.is_comprehensively_reviewed) 
-                                            "Comprehensively Reviewed" 
-                                        else 
-                                            "Review Pending",
-                                        style = MaterialTheme.typography.bodyMedium
+                                    Badge(
+                                        text = "${service.points.size} Points",
+                                        icon = rememberVectorPainter(Icons.Rounded.Warning),
+                                        color = BadgeColors.blue
                                     )
                                 }
                             }
                         }
                     }
 
-                    items(service.points) { point ->
-                        ElevatedCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp)
-                            ) {
-                                Text(
-                                    text = point.title,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = point.analysis,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                AssistChip(
-                                    onClick = { },
-                                    label = { Text(point.case.classification) }
-                                )
+                    // Points Sections
+                    if (service.points.isNotEmpty()) {
+                        // Group points by classification
+                        val groupedPoints = service.points.groupBy { it.case.classification }
+                        
+                        // Sort points in the order: Blocker, Bad, Good, Neutral
+                        val sortedClassifications = listOf("blocker", "bad", "good", "neutral")
+                        
+                        sortedClassifications.forEach { classification ->
+                            groupedPoints[classification]?.let { points ->
+                                item {
+                                    PointsGroup(
+                                        title = when(classification) {
+                                            "blocker" -> "Blocker Points"
+                                            "bad" -> "Bad Points"
+                                            "good" -> "Good Points"
+                                            else -> "Neutral Points"
+                                        },
+                                        points = points,
+                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                    )
+                                }
                             }
                         }
                     }
@@ -121,11 +165,35 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController) {
             } ?: run {
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = androidx.compose.ui.Alignment.Center
+                    contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
                 }
             }
         }
+    }
+}
+
+@Composable
+fun Badge(text: String, icon: Painter, color: Color) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(color)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
+    ) {
+        Icon(
+            painter = icon,
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier.size(16.dp)
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = text,
+            color = Color.White,
+            style = MaterialTheme.typography.labelMedium
+        )
     }
 }

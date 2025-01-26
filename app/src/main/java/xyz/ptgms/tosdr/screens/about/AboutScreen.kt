@@ -1,4 +1,4 @@
-package xyz.ptgms.tosdr.screens
+package xyz.ptgms.tosdr.screens.about
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack

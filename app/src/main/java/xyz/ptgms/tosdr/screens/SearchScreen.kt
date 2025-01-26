@@ -6,9 +6,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
@@ -153,17 +154,24 @@ fun SearchScreen(navController: NavController) {
                 } else {
                     LazyColumn(
                         contentPadding = PaddingValues(bottom = 80.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
-                        item {
-                            Spacer(modifier = Modifier.height(2.dp))
-                        }
-                        items(items = searchResults) { service ->
-                            ElevatedCard(
+                        items(
+                            items = searchResults,
+                            key = { it.id }
+                        ) { service ->
+                            Surface(
                                 onClick = { 
                                     navController.navigate(Screen.ServiceDetails.createRoute(service.id))
                                 },
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(
+                                    topStart = if (searchResults.firstOrNull() == service) 24.dp else 8.dp,
+                                    topEnd = if (searchResults.firstOrNull() == service) 24.dp else 8.dp,
+                                    bottomStart = if (searchResults.lastOrNull() == service) 24.dp else 8.dp,
+                                    bottomEnd = if (searchResults.lastOrNull() == service) 24.dp else 8.dp
+                                ),
+                                tonalElevation = 4.dp
                             ) {
                                 ListItem(
                                     headlineContent = { 
@@ -218,7 +226,6 @@ fun SearchScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(16.dp)
                     .align(Alignment.BottomCenter)
-//                    .navigationBarsPadding()
                     .imePadding()
             ) {
                 SearchBar(
@@ -245,7 +252,20 @@ fun SearchScreen(navController: NavController) {
                             expanded = false,
                             onExpandedChange = {},
                             placeholder = { Text("Search for services...") },
-                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
+                            leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null) },
+                            trailingIcon = {
+                                if (searchQuery.isNotEmpty()) {
+                                    IconButton(onClick = { 
+                                        searchQuery = ""
+                                        viewModel.clearSearchResults()
+                                    }) {
+                                        Icon(
+                                            Icons.Rounded.Close,
+                                            contentDescription = "Clear search"
+                                        )
+                                    }
+                                }
+                            }
                         )
                     },
                     content = {}

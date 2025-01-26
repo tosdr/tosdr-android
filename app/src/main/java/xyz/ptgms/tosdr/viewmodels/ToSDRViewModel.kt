@@ -14,6 +14,11 @@ import xyz.ptgms.tosdr.api.models.ServiceDetail
 import kotlinx.coroutines.Dispatchers
 import xyz.ptgms.tosdr.data.DatabaseUpdater
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.withContext
 
 class ToSDRViewModel : ViewModel() {
     private val repository = ToSDRRepository()
@@ -35,15 +40,22 @@ class ToSDRViewModel : ViewModel() {
     private val _preferServerSearch = MutableStateFlow(false)
     val preferServerSearch: StateFlow<Boolean> = _preferServerSearch
     
+    private val searchJob = Job()
+    private var searchDebounceJob: Job? = null
+
     fun searchServices(query: String, database: ToSDRDatabase, preferServerSearch: Boolean = false) {
-        viewModelScope.launch {
+        searchDebounceJob?.cancel()
+        searchDebounceJob = viewModelScope.launch {
+            delay(300) // Debounce for 300ms
+            
             if (preferServerSearch) {
                 repository.searchServices(query).onSuccess {
                     _searchResults.value = it
                 }
             } else {
-                launch(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     database.serviceDao().searchServices("%$query%")
+                        .take(20)
                         .collect { services ->
                             val mappedResults = services.map { service ->
                                 ServiceBasic(
@@ -121,5 +133,10 @@ class ToSDRViewModel : ViewModel() {
             .putBoolean("prefer_server_search", value)
             .apply()
         _preferServerSearch.value = value
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        searchJob.cancel()
     }
 } 

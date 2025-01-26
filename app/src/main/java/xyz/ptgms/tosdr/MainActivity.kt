@@ -1,8 +1,6 @@
 package xyz.ptgms.tosdr
 
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,8 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -25,6 +21,7 @@ import xyz.ptgms.tosdr.data.DatabaseUpdater
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import xyz.ptgms.tosdr.navigation.Screen
 import xyz.ptgms.tosdr.screens.*
+import xyz.ptgms.tosdr.screens.about.AboutScreen
 import xyz.ptgms.tosdr.ui.theme.ToSDRTheme
 import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 

@@ -2,6 +2,7 @@
 agp = "8.8.0"
 billing = "7.1.1"
 coilCompose = "2.7.0"
+composeMarkdown = "0.5.6"
 converterGson = "2.11.0"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
@@ -25,6 +26,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx"
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
 billing = { module = "com.android.billingclient:billing", version.ref = "billing" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
