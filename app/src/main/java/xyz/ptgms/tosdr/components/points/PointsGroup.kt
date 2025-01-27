@@ -17,7 +17,9 @@ import xyz.ptgms.tosdr.api.models.Point
 fun PointsGroup(
     modifier: Modifier = Modifier,
     title: String,
-    points: List<Point>
+    points: List<Point>,
+    onPointClick: (Point) -> Unit = {},
+    original: Boolean = false
 ) {
     Column(modifier = modifier) {
         Text(
@@ -35,7 +37,8 @@ fun PointsGroup(
                 points.forEach { point ->
                     PointsRow(
                         point = point,
-                        onClick = { /* Handle point click */ }
+                        onClick = { onPointClick(point) },
+                        original = original
                     )
                 }
             }

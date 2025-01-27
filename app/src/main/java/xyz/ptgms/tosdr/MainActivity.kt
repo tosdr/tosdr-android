@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    MainScreen(viewModel)
                 }
             }
         }
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModel: ToSDRViewModel) {
     val navController = rememberNavController()
     
     Scaffold(
@@ -71,15 +71,21 @@ fun MainScreen() {
                 .padding(paddingValues)
                 .navigationBarsPadding()
         ) {
-            composable(Screen.Search.route) { SearchScreen(navController) }
+            composable(Screen.Search.route) { SearchScreen(navController, viewModel) }
             composable(Screen.About.route) { AboutScreen(navController) }
             composable(Screen.Donate.route) { DonationScreen(navController) }
             composable(Screen.Team.route) { TeamScreen(navController) }
-            composable(Screen.Settings.route) { SettingsScreen(navController) }
+            composable(Screen.Settings.route) { SettingsScreen(navController, viewModel) }
             composable(Screen.ServiceDetails.route) { backStackEntry ->
                 val serviceId = backStackEntry.arguments?.getString("serviceId")?.toIntOrNull()
                 if (serviceId != null) {
-                    ServiceDetailsScreen(serviceId = serviceId, navController = navController)
+                    ServiceDetailsScreen(serviceId = serviceId, navController = navController, viewModel = viewModel)
+                }
+            }
+            composable(Screen.PointView.route) { backStackEntry ->
+                val pointId = backStackEntry.arguments?.getString("pointId")?.toIntOrNull()
+                if (pointId != null) {
+                    PointView(pointId = pointId, navController = navController, viewModel = viewModel)
                 }
             }
         }

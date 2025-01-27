@@ -14,7 +14,13 @@ class ToSDRRepository {
     }
     
     suspend fun getServiceDetails(id: Int): Result<ServiceDetail> = try {
-        Result.success(api.getServiceDetails(id))
+        var lang: String? = null
+        val deviceLanguage = java.util.Locale.getDefault().language
+        lang = when (deviceLanguage) {
+            "de", "nl", "es", "fr" -> deviceLanguage
+            else -> null
+        }
+        Result.success(api.getServiceDetails(id, lang))
     } catch (e: Exception) {
         Result.failure(e)
     }

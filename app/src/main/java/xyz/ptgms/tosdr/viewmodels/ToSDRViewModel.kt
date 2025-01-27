@@ -15,10 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import xyz.ptgms.tosdr.data.DatabaseUpdater
 import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.withContext
+import xyz.ptgms.tosdr.api.models.Point
 
 class ToSDRViewModel : ViewModel() {
     private val repository = ToSDRRepository()
@@ -28,6 +28,9 @@ class ToSDRViewModel : ViewModel() {
     
     private val _serviceDetails = MutableStateFlow<ServiceDetail?>(null)
     val serviceDetails: StateFlow<ServiceDetail?> = _serviceDetails
+
+    private val _pointDetails = MutableStateFlow<Point?>(null)
+    val pointDetails: StateFlow<Point?> = _pointDetails
 
     data class DbStats(
         val lastUpdate: Long = 0L,
@@ -84,6 +87,27 @@ class ToSDRViewModel : ViewModel() {
         viewModelScope.launch {
             repository.getServiceDetails(id).onSuccess {
                 _serviceDetails.value = it
+            }
+        }
+    }
+
+    fun isLocalized(): Boolean {
+        val serviceDetails = _serviceDetails.value
+        if (serviceDetails != null) {
+            for (point in serviceDetails.points) {
+                if (point.case.localized_title != null) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun getPointDetails(id: Int) {
+        viewModelScope.launch {
+            val point = serviceDetails.value?.points?.find { it.id == id }
+            if (point != null) {
+                _pointDetails.value = point
             }
         }
     }

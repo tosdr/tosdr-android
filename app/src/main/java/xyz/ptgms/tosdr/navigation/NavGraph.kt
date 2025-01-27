@@ -9,4 +9,7 @@ sealed class Screen(val route: String) {
     object ServiceDetails : Screen("service/{serviceId}") {
         fun createRoute(serviceId: Int) = "service/$serviceId"
     }
+    object PointView : Screen("point/{pointId}") {
+        fun createRoute(pointId: Int) = "point/$pointId"
+    }
 }

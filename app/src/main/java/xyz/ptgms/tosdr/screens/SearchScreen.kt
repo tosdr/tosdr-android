@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import xyz.ptgms.tosdr.R
@@ -35,9 +34,8 @@ import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
     val context = LocalContext.current
-    val viewModel: ToSDRViewModel = viewModel()
     val database = remember { ToSDRDatabase.getDatabase(context) }
     var searchQuery by remember { mutableStateOf("") }
     val searchResults by viewModel.searchResults.collectAsState()

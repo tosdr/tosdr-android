@@ -25,7 +25,8 @@ fun PointsRow(
     modifier: Modifier = Modifier,
     point: Point,
     onClick: (() -> Unit)? = null,
-    content: (@Composable () -> Unit)? = null
+    content: (@Composable () -> Unit)? = null,
+    original: Boolean = false
 ) {
     Surface(
         onClick = { onClick?.invoke() },
@@ -67,7 +68,11 @@ fun PointsRow(
                 Box(modifier = Modifier.weight(1f)) {
                     Text(
                         modifier = Modifier.padding(vertical = 4.dp),
-                        text = point.case.title,
+                        text = if (!original && point.case.localized_title != null) {
+                            point.case.localized_title
+                        } else {
+                            point.case.title
+                        },
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }

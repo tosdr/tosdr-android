@@ -6,40 +6,36 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import xyz.ptgms.tosdr.ui.theme.ToSDRColorScheme
-import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
-import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import xyz.ptgms.tosdr.R
-import xyz.ptgms.tosdr.api.models.Point
 import xyz.ptgms.tosdr.components.points.PointsGroup
-import xyz.ptgms.tosdr.components.points.PointsRow
+import xyz.ptgms.tosdr.navigation.Screen
 import xyz.ptgms.tosdr.ui.theme.BadgeColors
+import xyz.ptgms.tosdr.ui.theme.ToSDRColorScheme
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ServiceDetailsScreen(serviceId: Int, navController: NavController) {
-    val viewModel: ToSDRViewModel = viewModel()
+fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel: ToSDRViewModel) {
     val serviceDetails by viewModel.serviceDetails.collectAsState()
+    var showOriginal by remember { mutableStateOf(false) }
 
     LaunchedEffect(serviceId) {
         viewModel.getServiceDetails(serviceId)
@@ -155,7 +151,67 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController) {
                                             else -> "Neutral Points"
                                         },
                                         points = points,
-                                        modifier = Modifier.padding(horizontal = 16.dp)
+                                        onPointClick = { point ->
+                                            navController.navigate(Screen.PointView.createRoute(point.id))
+                                        },
+                                        modifier = Modifier.padding(horizontal = 16.dp),
+                                        original = showOriginal
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    // Add Localization Warning and Toggle
+                    if (viewModel.isLocalized()) {
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                Card(
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.errorContainer
+                                    ),
+                                    shape = RoundedCornerShape(24.dp)
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                            .fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.ic_rounded_warning_24),
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.error
+                                        )
+                                        Spacer(modifier = Modifier.width(16.dp))
+                                        Column {
+                                            Text(
+                                                text = "Warning",
+                                                style = MaterialTheme.typography.titleMedium,
+                                                color = MaterialTheme.colorScheme.error
+                                            )
+                                            Text(
+                                                text = "The points above have been machine translated and may not be accurate. We recommend checking the original titles to ensure accuracy.",
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = MaterialTheme.colorScheme.onErrorContainer
+                                            )
+                                        }
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text("Show original titles")
+                                    Switch(
+                                        checked = showOriginal,
+                                        onCheckedChange = { showOriginal = it }
                                     )
                                 }
                             }

@@ -23,9 +23,8 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController, viewModel: ToSDRViewModel) {
     val context = LocalContext.current
-    val viewModel: ToSDRViewModel = viewModel()
     val database = remember { ToSDRDatabase.getDatabase(context) }
     var isLoading by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
