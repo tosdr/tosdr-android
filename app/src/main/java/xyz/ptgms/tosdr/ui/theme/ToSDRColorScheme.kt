@@ -8,7 +8,7 @@ object ToSDRColorScheme {
     val gradeC = Color(0xFFF1C40F)
     val gradeD = Color(0xFFE67E22)
     val gradeE = Color(0xFFE74C3C)
-    val gradeNA = Color(0xFFE74C3C)
+    val gradeNA = Color(0xFF8F8F94)
 }
 
 object BadgeColors {

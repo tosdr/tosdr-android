@@ -22,8 +22,14 @@ import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import xyz.ptgms.tosdr.navigation.Screen
 import xyz.ptgms.tosdr.screens.*
 import xyz.ptgms.tosdr.screens.about.AboutScreen
+import xyz.ptgms.tosdr.screens.about.GradesExplainedScreen
+import xyz.ptgms.tosdr.screens.about.LibrariesScreen
+import xyz.ptgms.tosdr.screens.about.PointsExplainedScreen
+import xyz.ptgms.tosdr.screens.about.ServicesExplainedScreen
 import xyz.ptgms.tosdr.ui.theme.ToSDRTheme
 import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 
 class MainActivity : ComponentActivity() {
     private lateinit var database: ToSDRDatabase
@@ -69,7 +75,31 @@ fun MainScreen(viewModel: ToSDRViewModel) {
             startDestination = Screen.Search.route,
             modifier = Modifier
                 .padding(paddingValues)
-                .navigationBarsPadding()
+                .navigationBarsPadding(),
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(300)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(300)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(300)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(300)
+                )
+            }
         ) {
             composable(Screen.Search.route) { SearchScreen(navController, viewModel) }
             composable(Screen.About.route) { AboutScreen(navController) }
@@ -88,6 +118,10 @@ fun MainScreen(viewModel: ToSDRViewModel) {
                     PointView(pointId = pointId, navController = navController, viewModel = viewModel)
                 }
             }
+            composable(Screen.GradesExplained.route) { GradesExplainedScreen(navController) }
+            composable(Screen.PointsExplained.route) { PointsExplainedScreen(navController) }
+            composable(Screen.ServicesExplained.route) { ServicesExplainedScreen(navController) }
+            composable(Screen.Libraries.route) { LibrariesScreen(navController) }
         }
     }
 }

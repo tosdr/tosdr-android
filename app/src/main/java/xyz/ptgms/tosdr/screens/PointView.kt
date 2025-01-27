@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -55,6 +54,7 @@ fun PointView(pointId: Int, navController: NavController, viewModel: ToSDRViewMo
                     .padding(16.dp)
             ) {
                 item {
+                    Text("Point Details", style = MaterialTheme.typography.titleSmall)
                     PointsRow(point = pointDetails!!)
                 }
 

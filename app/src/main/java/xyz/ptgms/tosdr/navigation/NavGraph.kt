@@ -12,4 +12,8 @@ sealed class Screen(val route: String) {
     object PointView : Screen("point/{pointId}") {
         fun createRoute(pointId: Int) = "point/$pointId"
     }
+    object GradesExplained : Screen("about/grades")
+    object PointsExplained : Screen("about/points")
+    object ServicesExplained : Screen("about/services")
+    object Libraries : Screen("about/libraries")
 }

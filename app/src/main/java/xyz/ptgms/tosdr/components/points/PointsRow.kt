@@ -35,7 +35,7 @@ fun PointsRow(
             .defaultMinSize(minHeight = 58.dp),
         enabled = onClick != null,
         shape = RoundedCornerShape(8.dp),
-        tonalElevation = 4.dp
+        tonalElevation = 4.dp,
     ) {
         Row(
             modifier = Modifier
