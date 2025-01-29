@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -32,6 +33,8 @@ import androidx.navigation.NavController
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.aboutlibraries.util.withContext
+import xyz.ptgms.tosdr.R
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +47,7 @@ fun LibrariesScreen(navController: NavController) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
-                title = { Text("About App") }
+                title = { Text(stringResource(R.string.libraries_title)) }
             )
         }
     ) { padding ->
@@ -91,7 +94,7 @@ private fun AttributionList(ctx: Context, lib: Library, shape: Shape) {
                 style = MaterialTheme.typography.headlineSmall,
             )
             Text(
-                text = lib.description ?: "No description",
+                text = lib.description ?: stringResource(R.string.libraries_no_description),
                 modifier = Modifier.padding(8.dp),
                 style = MaterialTheme.typography.bodySmall,
             )
@@ -105,7 +108,7 @@ private fun AttributionList(ctx: Context, lib: Library, shape: Shape) {
                     i.data = Uri.parse(lib.website)
                     ctx.applicationContext.startActivity(i, null)
                 }) {
-                    Text(text = "Open Website")
+                    Text(text = stringResource(R.string.libraries_open_website))
                 }
             }
         }

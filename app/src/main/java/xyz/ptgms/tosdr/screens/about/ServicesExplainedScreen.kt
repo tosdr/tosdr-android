@@ -9,9 +9,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import xyz.ptgms.tosdr.R
 import xyz.ptgms.tosdr.components.settings.SettingsGroup
 import xyz.ptgms.tosdr.components.settings.SettingsTitle
 import xyz.ptgms.tosdr.ui.theme.BadgeColors
@@ -27,7 +29,7 @@ fun ServicesExplainedScreen(navController: NavController) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
-                title = { Text("Services") }
+                title = { Text(stringResource(R.string.services_title)) }
             )
         }
     ) { padding ->
@@ -38,7 +40,7 @@ fun ServicesExplainedScreen(navController: NavController) {
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                SettingsTitle(text = "Service Badges")
+                SettingsTitle(text = stringResource(R.string.services_badges))
                 SettingsGroup {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
@@ -62,13 +64,13 @@ fun ServicesExplainedScreen(navController: NavController) {
                                         tint = Color.White
                                     )
                                     Text(
-                                        text = "Review Status",
+                                        text = stringResource(R.string.services_review_status),
                                         style = MaterialTheme.typography.titleLarge,
                                         color = Color.White
                                     )
                                 }
                                 Text(
-                                    text = "In ToS;DR classically referred to as 'Comprehensively Reviewed', meaning this service has enough curated points to be deemed accurate enough for an everyday rating.",
+                                    text = stringResource(R.string.services_review_desc),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color.White
                                 )
@@ -79,10 +81,10 @@ fun ServicesExplainedScreen(navController: NavController) {
             }
 
             item {
-                SettingsTitle(text = "Service Contents")
+                SettingsTitle(text = stringResource(R.string.services_contents))
                 SettingsGroup {
                     Text(
-                        text = "Each Service includes Points that determine a final Grade, Links to all policies that are relevant to ToS;DR and other useful information.",
+                        text = stringResource(R.string.services_contents_desc),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(16.dp)
                     )

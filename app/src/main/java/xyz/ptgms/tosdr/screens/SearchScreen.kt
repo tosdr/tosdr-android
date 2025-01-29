@@ -31,17 +31,25 @@ import xyz.ptgms.tosdr.data.room.ToSDRDatabase
 import xyz.ptgms.tosdr.navigation.Screen
 import xyz.ptgms.tosdr.ui.theme.ToSDRColorScheme
 import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
+import androidx.activity.compose.BackHandler
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
     val context = LocalContext.current
     val database = remember { ToSDRDatabase.getDatabase(context) }
-    var searchQuery by remember { mutableStateOf("") }
+    val searchQuery by viewModel.searchQuery.collectAsState()
     val searchResults by viewModel.searchResults.collectAsState()
     val preferServerSearch by viewModel.preferServerSearch.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
     
+    BackHandler(enabled = searchQuery.isNotEmpty()) {
+        viewModel.setSearchQuery("")
+        viewModel.clearSearchResults()
+        keyboardController?.hide()
+    }
+
     LaunchedEffect(Unit) {
         viewModel.loadPreferences(context)
     }
@@ -50,11 +58,11 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("ToS;DR")
+                    Text(stringResource(R.string.app_name))
                 },
                 actions = {
                     IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
-                        Icon(Icons.Rounded.Settings, contentDescription = null)
+                        Icon(Icons.Rounded.Settings, contentDescription = stringResource(R.string.topbar_settings))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -81,7 +89,7 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Text(
-                            "Quick Actions",
+                            stringResource(R.string.home_quick_actions),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -98,7 +106,7 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                                     )
                                 },
                                 title = {
-                                    Text("About ToS;DR")
+                                    Text(stringResource(R.string.home_about_tos_dr))
                                 },
                                 trailing = {
                                     Icon(
@@ -118,7 +126,7 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                                     )
                                 },
                                 title = {
-                                    Text("Team")
+                                    Text(stringResource(R.string.team_title))
                                 },
                                 trailing = {
                                     Icon(
@@ -138,7 +146,7 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                                     )
                                 },
                                 title = {
-                                    Text("Donate")
+                                    Text(stringResource(R.string.donate_title))
                                 },
                                 trailing = {
                                     Icon(
@@ -234,7 +242,7 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                         SearchBarDefaults.InputField(
                             query = searchQuery,
                             onQueryChange = { 
-                                searchQuery = it
+                                viewModel.setSearchQuery(it)
                                 if (it.isEmpty()) {
                                     viewModel.clearSearchResults()
                                 } else if (!preferServerSearch && it.length >= 2) {
@@ -249,17 +257,17 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                             },
                             expanded = false,
                             onExpandedChange = {},
-                            placeholder = { Text("Search for services...") },
+                            placeholder = { Text(stringResource(R.string.home_search_placeholder)) },
                             leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null) },
                             trailingIcon = {
                                 if (searchQuery.isNotEmpty()) {
                                     IconButton(onClick = { 
-                                        searchQuery = ""
+                                        viewModel.setSearchQuery("")
                                         viewModel.clearSearchResults()
                                     }) {
                                         Icon(
                                             Icons.Rounded.Close,
-                                            contentDescription = "Clear search"
+                                            contentDescription = stringResource(R.string.home_clear_search)
                                         )
                                     }
                                 }

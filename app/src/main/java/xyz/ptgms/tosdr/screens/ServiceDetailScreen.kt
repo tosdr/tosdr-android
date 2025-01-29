@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -48,7 +49,10 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                     IconButton(
                         onClick = { navController.navigateUp() }
                     ) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.nav_back)
+                        )
                     }
                 },
                 actions = {
@@ -59,10 +63,13 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                             navController.context.startActivity(intent)
                         }
                     ) {
-                        Icon(painterResource(R.drawable.ic_rounded_open_in_browser_24), "Open in Browser")
+                        Icon(
+                            painterResource(R.drawable.ic_rounded_open_in_browser_24),
+                            stringResource(R.string.open_in_browser)
+                        )
                     }
                 },
-                title = { Text(serviceDetails?.name ?: "Loading...") }
+                title = { Text(serviceDetails?.name ?: stringResource(R.string.service_loading)) }
             )
         }
     ) { padding ->
@@ -86,7 +93,10 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                             ) {
                                 AsyncImage(
                                     model = "https://s3.tosdr.org/logos/${service.id}.png",
-                                    contentDescription = "${service.name} logo",
+                                    contentDescription = stringResource(
+                                        R.string.service_logo_placeholder,
+                                        service.name
+                                    ),
                                     modifier = Modifier.size(75.dp),
                                     error = painterResource(id = R.drawable.ic_service_placeholder),
                                     placeholder = painterResource(id = R.drawable.ic_service_placeholder)
@@ -97,7 +107,7 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                                     style = MaterialTheme.typography.headlineLarge
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
-                                
+
                                 // Badges Row
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -105,15 +115,18 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                                 ) {
                                     if (service.is_comprehensively_reviewed) {
                                         Badge(
-                                            text = "Reviewed",
+                                            text = stringResource(R.string.service_reviewed),
                                             icon = rememberVectorPainter(Icons.Rounded.Check),
                                             color = BadgeColors.green
                                         )
                                     }
                                     Badge(
-                                        text = "Grade ${service.rating}",
+                                        text = stringResource(
+                                            R.string.service_grade,
+                                            service.rating
+                                        ),
                                         icon = painterResource(R.drawable.ic_rounded_shield_24),
-                                        color = when(service.rating) {
+                                        color = when (service.rating) {
                                             "A" -> ToSDRColorScheme.gradeA
                                             "B" -> ToSDRColorScheme.gradeB
                                             "C" -> ToSDRColorScheme.gradeC
@@ -123,7 +136,10 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                                         }
                                     )
                                     Badge(
-                                        text = "${service.points.size} Points",
+                                        text = stringResource(
+                                            R.string.service_point_cnt,
+                                            service.points.size
+                                        ),
                                         icon = rememberVectorPainter(Icons.Rounded.Warning),
                                         color = BadgeColors.blue
                                     )
@@ -136,23 +152,27 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                     if (service.points.isNotEmpty()) {
                         // Group points by classification
                         val groupedPoints = service.points.groupBy { it.case.classification }
-                        
+
                         // Sort points in the order: Blocker, Bad, Good, Neutral
                         val sortedClassifications = listOf("blocker", "bad", "good", "neutral")
-                        
+
                         sortedClassifications.forEach { classification ->
                             groupedPoints[classification]?.let { points ->
                                 item {
                                     PointsGroup(
-                                        title = when(classification) {
-                                            "blocker" -> "Blocker Points"
-                                            "bad" -> "Bad Points"
-                                            "good" -> "Good Points"
-                                            else -> "Neutral Points"
+                                        title = when (classification) {
+                                            "blocker" -> stringResource(R.string.service_blocker)
+                                            "bad" -> stringResource(R.string.service_bad)
+                                            "good" -> stringResource(R.string.service_good)
+                                            else -> stringResource(R.string.service_neutral)
                                         },
                                         points = points,
                                         onPointClick = { point ->
-                                            navController.navigate(Screen.PointView.createRoute(point.id))
+                                            navController.navigate(
+                                                Screen.PointView.createRoute(
+                                                    point.id
+                                                )
+                                            )
                                         },
                                         modifier = Modifier.padding(horizontal = 16.dp),
                                         original = showOriginal
@@ -190,12 +210,12 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                                         Spacer(modifier = Modifier.width(16.dp))
                                         Column {
                                             Text(
-                                                text = "Warning",
+                                                text = stringResource(R.string.service_localization_warning),
                                                 style = MaterialTheme.typography.titleMedium,
                                                 color = MaterialTheme.colorScheme.error
                                             )
                                             Text(
-                                                text = "The points above have been machine translated and may not be accurate. We recommend checking the original titles to ensure accuracy.",
+                                                text = stringResource(R.string.service_localization_warning_desc),
                                                 style = MaterialTheme.typography.bodySmall,
                                                 color = MaterialTheme.colorScheme.onErrorContainer
                                             )
@@ -208,7 +228,7 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    Text("Show original titles")
+                                    Text(stringResource(R.string.service_localization_show_original))
                                     Switch(
                                         checked = showOriginal,
                                         onCheckedChange = { showOriginal = it }

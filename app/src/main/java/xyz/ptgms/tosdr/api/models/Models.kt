@@ -1,9 +1,13 @@
 package xyz.ptgms.tosdr.api.models
 
+import androidx.annotation.Keep
+
+@Keep
 data class SearchResponse(
     val services: List<ServiceBasic>
 )
 
+@Keep
 data class ServiceBasic(
     val id: Int,
     val is_comprehensively_reviewed: Boolean,
@@ -15,6 +19,7 @@ data class ServiceBasic(
     val rating: String
 )
 
+@Keep
 data class ServiceDetail(
     val id: Int,
     val is_comprehensively_reviewed: Boolean,
@@ -29,6 +34,7 @@ data class ServiceDetail(
     val points: List<Point>
 )
 
+@Keep
 data class Document(
     val id: Int,
     val name: String,
@@ -37,6 +43,7 @@ data class Document(
     val created_at: String
 )
 
+@Keep
 data class Point(
     val id: Int,
     val title: String,
@@ -49,6 +56,7 @@ data class Point(
     val created_at: String
 )
 
+@Keep
 data class Case(
     val id: Int,
     val weight: Int,
@@ -61,6 +69,7 @@ data class Case(
     val classification: String
 )
 
+@Keep
 data class AppDbEntry(
     val id: Int,
     val name: String,

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -45,10 +45,12 @@ fun TeamScreen(navController: NavController) {
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(
+                            R.string.nav_back
+                        ))
                     }
                 },
-                title = { Text("Team") }
+                title = { Text(stringResource(R.string.team_title)) }
             )
         }
     ) { padding ->
@@ -60,7 +62,7 @@ fun TeamScreen(navController: NavController) {
             ) {
                 item {
                     Text(
-                        "Founders",
+                        stringResource(R.string.team_founders),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(16.dp)
                     )
@@ -71,7 +73,7 @@ fun TeamScreen(navController: NavController) {
 
                 item {
                     Text(
-                        "Current Team",
+                        stringResource(R.string.team_current),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(16.dp)
                     )
@@ -82,7 +84,7 @@ fun TeamScreen(navController: NavController) {
 
                 item {
                     Text(
-                        "Past Contributors",
+                        stringResource(R.string.team_past),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(16.dp)
                     )
@@ -120,7 +122,7 @@ fun TeamMemberCard(member: TeamMember) {
             ) {
                 AsyncImage(
                     model = member.photo,
-                    contentDescription = "${member.name}'s photo",
+                    contentDescription = stringResource(R.string.team_photo_desc, member.name),
                     modifier = Modifier
                         .size(60.dp)
                         .clip(CircleShape),
@@ -160,7 +162,7 @@ fun TeamMemberCard(member: TeamMember) {
                 ) {
                     member.links.email?.let { email ->
                         IconButton(onClick = { uriHandler.openUri("mailto:$email") }) {
-                            Icon(Icons.Rounded.Email, contentDescription = "Email")
+                            Icon(Icons.Rounded.Email, contentDescription = stringResource(R.string.team_email))
                         }
                     }
                     
@@ -172,7 +174,7 @@ fun TeamMemberCard(member: TeamMember) {
                     
                     member.links.website?.let { website ->
                         IconButton(onClick = { uriHandler.openUri(website) }) {
-                            Icon(Icons.Rounded.Home, contentDescription = "Website")
+                            Icon(Icons.Rounded.Home, contentDescription = stringResource(R.string.team_website))
                         }
                     }
                     

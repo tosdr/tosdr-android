@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import xyz.ptgms.tosdr.R
@@ -34,7 +35,7 @@ fun AboutScreen(navController: NavController) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
-                title = { Text("About") }
+                title = { Text(stringResource(R.string.about_title)) }
             )
         }
     ) { padding ->
@@ -45,7 +46,7 @@ fun AboutScreen(navController: NavController) {
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                SettingsTitle(text = "Welcome!")
+                SettingsTitle(text = stringResource(R.string.about_welcome))
                 SettingsGroup {
                     SettingsRow(
                         leading = {
@@ -55,13 +56,13 @@ fun AboutScreen(navController: NavController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        title = { Text("Welcome to ToS;DR!") }
+                        title = { Text(stringResource(R.string.about_welcome_title)) }
                     )
                     
                     SettingsRow(
                         title = {
                             Text(
-                                "This will guide you through everything there is to know about ToS;DR! Feel free to click anything below to learn more!",
+                                stringResource(R.string.about_welcome_desc),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -70,12 +71,12 @@ fun AboutScreen(navController: NavController) {
             }
 
             item {
-                SettingsTitle(text = "Organization")
+                SettingsTitle(text = stringResource(R.string.about_organization))
                 SettingsGroup {
                     SettingsRow(
                         title = {
                             Text(
-                                "Terms of Service; Didn't Read\" (short: ToS;DR) is a young project started in June 2012 to help fix the \"biggest lie on the web\": almost no one really reads the terms of service we agree to all the time. We aim at rating popular web services Terms of Service and Privacy Policies by summarizing them in \"convenient\" grades from A to E with so called \"Points\".",
+                                stringResource(R.string.about_organization_desc1),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -84,7 +85,7 @@ fun AboutScreen(navController: NavController) {
                     SettingsRow(
                         title = {
                             Text(
-                                "ToS;DR is a non-profit organization, and all of our team members and contributors do their work as volunteers, with payment being rare. We rely on donations to keep our infrastructure and operations up, and our finances are laid out through our website and collective websites.",
+                                stringResource(R.string.about_organization_desc2),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -93,7 +94,7 @@ fun AboutScreen(navController: NavController) {
             }
 
             item {
-                SettingsTitle(text = "Terminology")
+                SettingsTitle(text = stringResource(R.string.about_terminology))
                 SettingsGroup {
                     SettingsRow(
                         leading = {
@@ -103,7 +104,7 @@ fun AboutScreen(navController: NavController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        title = { Text("Grades") },
+                        title = { Text(stringResource(R.string.about_grades)) },
                         trailing = {
                             Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, contentDescription = null)
                         },
@@ -118,7 +119,7 @@ fun AboutScreen(navController: NavController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        title = { Text("Points") },
+                        title = { Text(stringResource(R.string.about_points)) },
                         trailing = {
                             Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, contentDescription = null)
                         },
@@ -133,7 +134,7 @@ fun AboutScreen(navController: NavController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        title = { Text("Services") },
+                        title = { Text(stringResource(R.string.about_services)) },
                         trailing = {
                             Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, contentDescription = null)
                         },
@@ -143,7 +144,7 @@ fun AboutScreen(navController: NavController) {
             }
 
             item {
-                SettingsTitle(text = "Contribute")
+                SettingsTitle(text = stringResource(R.string.about_contribute))
                 SettingsGroup {
                     SettingsRow(
                         leading = {
@@ -153,7 +154,7 @@ fun AboutScreen(navController: NavController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        title = { Text("Curate Terms of Service") },
+                        title = { Text(stringResource(R.string.about_curate)) },
                         trailing = {
                             Icon(
                                 painterResource(R.drawable.ic_rounded_open_in_browser_24),
@@ -169,7 +170,7 @@ fun AboutScreen(navController: NavController) {
             }
 
             item {
-                SettingsTitle(text = "This App")
+                SettingsTitle(text = stringResource(R.string.about_this_app))
                 SettingsGroup {
                     SettingsRow(
                         leading = {
@@ -179,7 +180,7 @@ fun AboutScreen(navController: NavController) {
                                 tint = MaterialTheme.colorScheme.primary
                             )
                         },
-                        title = { Text("Libraries") },
+                        title = { Text(stringResource(R.string.about_libraries)) },
                         trailing = {
                             Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, contentDescription = null)
                         },

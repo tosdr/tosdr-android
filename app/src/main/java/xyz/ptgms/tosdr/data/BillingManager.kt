@@ -68,7 +68,11 @@ class BillingManager(
 
         billingClient.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                _purchaseState.value = PurchaseState.ProductsAvailable(productDetailsList)
+                // Sort products by amount
+                val sortedProducts = productDetailsList.sortedBy { 
+                    it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0L
+                }
+                _purchaseState.value = PurchaseState.ProductsAvailable(sortedProducts)
             }
         }
     }
@@ -112,27 +116,26 @@ class BillingManager(
     }
 
     private fun handlePurchase(purchase: Purchase) {
-        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-            if (!purchase.isAcknowledged) {
-                val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
-                    .setPurchaseToken(purchase.purchaseToken)
-                    .build()
-                
-                billingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
-                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        // After acknowledging, consume the purchase to allow repurchasing
-                        val consumeParams = ConsumeParams.newBuilder()
-                            .setPurchaseToken(purchase.purchaseToken)
-                            .build()
-                        
-                        billingClient.consumeAsync(consumeParams) { consumeResult, _ ->
-                            if (consumeResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                                _purchaseState.value = PurchaseState.PurchaseSuccessful
-                            }
+        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED && !purchase.isAcknowledged) {
+            val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
+                .setPurchaseToken(purchase.purchaseToken)
+                .build()
+
+            billingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    // After acknowledging, consume the purchase to allow repurchasing
+                    val consumeParams = ConsumeParams.newBuilder()
+                        .setPurchaseToken(purchase.purchaseToken)
+                        .build()
+
+                    billingClient.consumeAsync(consumeParams) { consumeResult, _ ->
+                        if (consumeResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                            _purchaseState.value = PurchaseState.PurchaseSuccessful
                         }
                     }
                 }
             }
+
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import xyz.ptgms.tosdr.R
@@ -28,7 +29,7 @@ fun PointsExplainedScreen(navController: NavController) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
-                title = { Text("Points") }
+                title = { Text(stringResource(R.string.points_title)) }
             )
         }
     ) { padding ->
@@ -39,29 +40,29 @@ fun PointsExplainedScreen(navController: NavController) {
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                SettingsTitle(text = "Classifications")
+                SettingsTitle(text = stringResource(R.string.points_classifications))
                 SettingsGroup {
                     ClassificationRow(
-                        title = "Blocker",
-                        description = "This point has severe effects on your user rights and/or privacy. This point immediately classifies a service as having the worst grade.",
+                        title = stringResource(R.string.points_blocker_title),
+                        description = stringResource(R.string.points_blocker_desc),
                         icon = painterResource(R.drawable.ic_rounded_block_24),
                         color = BadgeColors.red
                     )
                     ClassificationRow(
-                        title = "Bad",
-                        description = "This point negatively impacts your user rights and/or privacy. Be advised.",
+                        title = stringResource(R.string.points_bad_title),
+                        description = stringResource(R.string.points_bad_desc),
                         icon = painterResource(R.drawable.ic_rounded_thumb_down_24),
                         color = BadgeColors.orange
                     )
                     ClassificationRow(
-                        title = "Good",
-                        description = "This point stands out as being valuable and good for your user rights and/or privacy!",
+                        title = stringResource(R.string.points_good_title),
+                        description = stringResource(R.string.points_good_desc),
                         icon = painterResource(R.drawable.ic_rounded_thumb_up_24),
                         color = BadgeColors.green
                     )
                     ClassificationRow(
-                        title = "Neutral",
-                        description = "This point is neither good nor bad for your user rights and/or privacy.",
+                        title = stringResource(R.string.points_neutral_title),
+                        description = stringResource(R.string.points_neutral_desc),
                         icon = painterResource(R.drawable.ic_rounded_info_24),
                         color = BadgeColors.gray
                     )
@@ -69,32 +70,32 @@ fun PointsExplainedScreen(navController: NavController) {
             }
 
             item {
-                SettingsTitle(text = "Grade Calculation")
+                SettingsTitle(text = stringResource(R.string.points_grade_calculation))
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        "The grade for an Service is calculated based on how many points it has and what type they are. These calculations change frequently, however, the general idea is as follows:",
+                        stringResource(R.string.points_grade_intro),
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        "Services with many great points for the user should be classified as an A",
+                        stringResource(R.string.points_grade_a),
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        "Services with many great points and some negative ones should be classified as an B",
+                        stringResource(R.string.points_grade_b),
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        "Services with some great points and some negative ones should be classified as an C",
+                        stringResource(R.string.points_grade_c),
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        "Services with few great points and many negative ones should be classified as an D",
+                        stringResource(R.string.points_grade_d),
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        "Services with a blocker should be classified as an E",
+                        stringResource(R.string.points_grade_e),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

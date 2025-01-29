@@ -46,6 +46,9 @@ class ToSDRViewModel : ViewModel() {
     private val searchJob = Job()
     private var searchDebounceJob: Job? = null
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
+
     fun searchServices(query: String, database: ToSDRDatabase, preferServerSearch: Boolean = false) {
         searchDebounceJob?.cancel()
         searchDebounceJob = viewModelScope.launch {
@@ -157,6 +160,10 @@ class ToSDRViewModel : ViewModel() {
             .putBoolean("prefer_server_search", value)
             .apply()
         _preferServerSearch.value = value
+    }
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
     override fun onCleared() {

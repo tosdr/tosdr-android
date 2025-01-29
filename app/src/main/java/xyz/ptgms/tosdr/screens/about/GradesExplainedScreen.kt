@@ -8,9 +8,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import xyz.ptgms.tosdr.R
 import xyz.ptgms.tosdr.components.settings.SettingsGroup
 import xyz.ptgms.tosdr.components.settings.SettingsTitle
 import xyz.ptgms.tosdr.ui.theme.ToSDRColorScheme
@@ -26,7 +28,7 @@ fun GradesExplainedScreen(navController: NavController) {
                         Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
-                title = { Text("Grades") }
+                title = { Text(stringResource(R.string.grades_title)) }
             )
         }
     ) { padding ->
@@ -37,48 +39,48 @@ fun GradesExplainedScreen(navController: NavController) {
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                SettingsTitle(text = "Grades")
+                SettingsTitle(text = stringResource(R.string.grades_title))
                 SettingsGroup {
                     GradeRow(
                         grade = "A",
-                        title = "Excellent",
-                        description = "Our best grade: This service respects your privacy.",
+                        title = stringResource(R.string.grade_a_title),
+                        description = stringResource(R.string.grade_a_desc),
                         color = ToSDRColorScheme.gradeA
                     )
                     GradeRow(
                         grade = "B",
-                        title = "Good",
-                        description = "A pretty good grade: This service are fair for the user and could use minor adjustments.",
+                        title = stringResource(R.string.grade_b_title),
+                        description = stringResource(R.string.grade_b_desc),
                         color = ToSDRColorScheme.gradeB
                     )
                     GradeRow(
                         grade = "C",
-                        title = "Okay",
-                        description = "This service is okay. The terms are okay, but some issues need your consideration.",
+                        title = stringResource(R.string.grade_c_title),
+                        description = stringResource(R.string.grade_c_desc),
                         color = ToSDRColorScheme.gradeC
                     )
                     GradeRow(
                         grade = "D",
-                        title = "Bad",
-                        description = "This service's terms are uneven or there are some issues that need your attention.",
+                        title = stringResource(R.string.grade_d_title),
+                        description = stringResource(R.string.grade_d_desc),
                         color = ToSDRColorScheme.gradeD
                     )
                     GradeRow(
                         grade = "E",
-                        title = "Awful",
-                        description = "Our worst grade: This service raises some serious concerns regarding privacy.",
+                        title = stringResource(R.string.grade_e_title),
+                        description = stringResource(R.string.grade_e_desc),
                         color = ToSDRColorScheme.gradeE
                     )
                 }
             }
 
             item {
-                SettingsTitle(text = "Other")
+                SettingsTitle(text = stringResource(R.string.grades_other))
                 SettingsGroup {
                     GradeRow(
                         grade = "N/A",
-                        title = "Not Available",
-                        description = "This service has not received enough curated points to display an accurate grade. Feel free to contribute!",
+                        title = stringResource(R.string.grade_na_title),
+                        description = stringResource(R.string.grade_na_desc),
                         color = ToSDRColorScheme.gradeNA
                     )
                 }

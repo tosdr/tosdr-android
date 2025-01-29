@@ -1,9 +1,11 @@
 package xyz.ptgms.tosdr.data.room
 
+import androidx.annotation.Keep
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+@Keep
 interface ServiceDao {
     @Query("SELECT * FROM services WHERE name LIKE :query OR url LIKE :query")
     fun searchServices(query: String): Flow<List<ServiceEntity>>

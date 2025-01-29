@@ -6,18 +6,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import xyz.ptgms.tosdr.data.BillingManager
 import xyz.ptgms.tosdr.components.settings.SettingsGroup
 import xyz.ptgms.tosdr.components.settings.SettingsRow
 import xyz.ptgms.tosdr.components.settings.SettingsTitle
+import xyz.ptgms.tosdr.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,10 +35,10 @@ fun DonationScreen(navController: NavController) {
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.nav_back))
                     }
                 },
-                title = { Text("Donate") }
+                title = { Text(stringResource(R.string.donate_title)) }
             )
         }
     ) { padding ->
@@ -45,12 +49,12 @@ fun DonationScreen(navController: NavController) {
                 .padding(horizontal = 16.dp)
         ) {
             item {
-                SettingsTitle(text = "Support ToS;DR")
+                SettingsTitle(text = stringResource(R.string.donate_support))
                 SettingsGroup {
                     SettingsRow(
                         title = {
                             Text(
-                                "Your donation helps us maintain and improve our services. Choose an amount below:",
+                                stringResource(R.string.donate_support_desc),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -61,7 +65,7 @@ fun DonationScreen(navController: NavController) {
             when (val state = purchaseState) {
                 is BillingManager.PurchaseState.ProductsAvailable -> {
                     item {
-                        SettingsTitle(text = "Choose Amount")
+                        SettingsTitle(text = stringResource(R.string.donate_amount))
                         SettingsGroup {
                             state.products.forEach { product ->
                                 SettingsRow(
@@ -80,10 +84,25 @@ fun DonationScreen(navController: NavController) {
                                         )
                                     },
                                     trailing = {
-                                        Icon(
-                                            Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                            contentDescription = null
-                                        )
+                                        Row(
+                                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            FilledTonalButton(
+                                                onClick = {
+                                                    billingManager.launchBillingFlow(
+                                                        context as ComponentActivity,
+                                                        product
+                                                    )
+                                                }
+                                            ) {
+                                                Text(stringResource(R.string.donate_purchase))
+                                            }
+                                            Icon(
+                                                Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                                                contentDescription = null
+                                            )
+                                        }
                                     }
                                 )
                             }
@@ -92,15 +111,38 @@ fun DonationScreen(navController: NavController) {
                 }
                 is BillingManager.PurchaseState.PurchaseSuccessful -> {
                     item {
-                        SettingsGroup {
-                            SettingsRow(
-                                title = {
-                                    Text(
-                                        "Thank you for your donation!",
-                                        style = MaterialTheme.typography.bodyLarge
-                                    )
-                                }
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
                             )
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    Icons.Rounded.Favorite,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(48.dp),
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    stringResource(R.string.donation_thanks),
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    stringResource(R.string.donation_thanks_desc),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
                         }
                     }
                 }

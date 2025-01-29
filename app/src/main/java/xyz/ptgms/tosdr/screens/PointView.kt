@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import xyz.ptgms.tosdr.R
@@ -37,11 +38,11 @@ fun PointView(pointId: Int, navController: NavController, viewModel: ToSDRViewMo
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.nav_back))
                     }
                 },
                 title = { 
-                    Text("Point Details")
+                    Text(stringResource(R.string.point_details))
                 }
             )
         }
@@ -54,14 +55,14 @@ fun PointView(pointId: Int, navController: NavController, viewModel: ToSDRViewMo
                     .padding(16.dp)
             ) {
                 item {
-                    Text("Point Details", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.point_details), style = MaterialTheme.typography.titleSmall)
                     PointsRow(point = pointDetails!!)
                 }
 
                 if (pointDetails!!.case.localized_title != null) {
                     item {
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Original Point", style = MaterialTheme.typography.titleSmall)
+                        Text(stringResource(R.string.point_original_point), style = MaterialTheme.typography.titleSmall)
                         PointsRow(point = pointDetails!!, original = true)
                     }
                 }
@@ -72,7 +73,7 @@ fun PointView(pointId: Int, navController: NavController, viewModel: ToSDRViewMo
                 
                 if (pointDetails!!.case.description.isNotEmpty()) {
                     item {
-                        SectionCard(title = "Description") {
+                        SectionCard(title = stringResource(R.string.point_description)) {
                             Text(pointDetails!!.case.description)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
@@ -80,7 +81,7 @@ fun PointView(pointId: Int, navController: NavController, viewModel: ToSDRViewMo
                 }
 
                 item {
-                    SectionCard(title = "Actions") {
+                    SectionCard(title = stringResource(R.string.point_actions)) {
                         Button(
                             onClick = {
                                 val intent = Intent(Intent.ACTION_VIEW)
@@ -91,7 +92,7 @@ fun PointView(pointId: Int, navController: NavController, viewModel: ToSDRViewMo
                         ) {
                             Icon(painterResource(R.drawable.ic_rounded_open_in_browser_24), contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Open on ToS;DR")
+                            Text(stringResource(R.string.point_open_tosdr))
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package xyz.ptgms.tosdr.data
 
+import androidx.annotation.Keep
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import xyz.ptgms.tosdr.data.room.ServiceEntity
@@ -16,6 +17,7 @@ object DatabaseUpdater {
         return lastUpdate == 0L || currentTime - lastUpdate >= SEVEN_DAYS_IN_MILLIS
     }
 
+    @Keep
     fun updateDatabase(
         viewModel: ToSDRViewModel,
         database: ToSDRDatabase
