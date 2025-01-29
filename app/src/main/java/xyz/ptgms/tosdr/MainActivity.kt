@@ -1,6 +1,7 @@
 package xyz.ptgms.tosdr
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -44,7 +45,10 @@ class MainActivity : ComponentActivity() {
         
         lifecycleScope.launch {
             if (DatabaseUpdater.shouldUpdate(database)) {
-                DatabaseUpdater.updateDatabase(viewModel, database)
+                viewModel.refreshDatabase(database) {
+                    if (it) Log.i("Updater", "Successfully auto-updated the DB")
+                    else Log.i("Updater", "Could not auto-update the DB")
+                }
             }
         }
         

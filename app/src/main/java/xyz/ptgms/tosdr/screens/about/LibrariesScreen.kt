@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.Button
@@ -34,6 +33,7 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.aboutlibraries.util.withContext
 import xyz.ptgms.tosdr.R
+import xyz.ptgms.tosdr.components.lists.getAdaptiveRoundedCornerShape
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,15 +65,12 @@ fun LibrariesScreen(navController: NavController) {
 
             val uniqueLibs = libs.libraries.distinctBy { it.name }
             items(uniqueLibs) { lib ->
-                val index = uniqueLibs.indexOf(lib)
                 AttributionList(
                     context,
                     lib,
-                    shape = RoundedCornerShape(
-                        topStart = if (index == 0) 24.dp else 8.dp,
-                        topEnd = if (index == 0) 24.dp else 8.dp,
-                        bottomStart = if (index == uniqueLibs.lastIndex) 24.dp else 8.dp,
-                        bottomEnd = if (index == uniqueLibs.lastIndex) 24.dp else 8.dp
+                    shape = getAdaptiveRoundedCornerShape(
+                        index = uniqueLibs.indexOf(lib),
+                        lastIndex = uniqueLibs.lastIndex
                     )
                 )
             }

@@ -33,6 +33,7 @@ import xyz.ptgms.tosdr.ui.theme.ToSDRColorScheme
 import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel
 import androidx.activity.compose.BackHandler
 import androidx.compose.ui.res.stringResource
+import xyz.ptgms.tosdr.components.lists.getAdaptiveRoundedCornerShape
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -171,11 +172,9 @@ fun SearchScreen(navController: NavController, viewModel: ToSDRViewModel) {
                                     navController.navigate(Screen.ServiceDetails.createRoute(service.id))
                                 },
                                 modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(
-                                    topStart = if (searchResults.firstOrNull() == service) 24.dp else 8.dp,
-                                    topEnd = if (searchResults.firstOrNull() == service) 24.dp else 8.dp,
-                                    bottomStart = if (searchResults.lastOrNull() == service) 24.dp else 8.dp,
-                                    bottomEnd = if (searchResults.lastOrNull() == service) 24.dp else 8.dp
+                                shape = getAdaptiveRoundedCornerShape(
+                                    index = searchResults.indexOf(service),
+                                    lastIndex = searchResults.lastIndex
                                 ),
                                 tonalElevation = 4.dp
                             ) {
