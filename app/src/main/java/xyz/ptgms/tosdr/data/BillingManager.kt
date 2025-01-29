@@ -1,4 +1,4 @@
-package xyz.ptgms.tosdr.billing
+package xyz.ptgms.tosdr.data
 
 import android.app.Activity
 import android.content.Context
@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class BillingManager(
-    private val context: Context
+    context: Context
 ) : PurchasesUpdatedListener, BillingClientStateListener {
 
     private var billingClient: BillingClient = BillingClient.newBuilder(context)
         .setListener(this)
-        .enablePendingPurchases()
+        .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
         .build()
 
     private val _purchaseState = MutableStateFlow<PurchaseState>(PurchaseState.IDLE)
@@ -26,6 +26,7 @@ class BillingManager(
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             // Billing client is ready
             queryAvailableProducts()
+            consumeExistingPurchases()
         }
     }
 
@@ -52,6 +53,14 @@ class BillingManager(
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId("1euro_donation")
                         .setProductType(BillingClient.ProductType.INAPP)
+                        .build(),
+                    QueryProductDetailsParams.Product.newBuilder()
+                        .setProductId("5euro_donation")
+                        .setProductType(BillingClient.ProductType.INAPP)
+                        .build(),
+                    QueryProductDetailsParams.Product.newBuilder()
+                        .setProductId("10euro_donation")
+                        .setProductType(BillingClient.ProductType.INAPP)
                         .build()
                 )
             )
@@ -60,6 +69,30 @@ class BillingManager(
         billingClient.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 _purchaseState.value = PurchaseState.ProductsAvailable(productDetailsList)
+            }
+        }
+    }
+
+    private fun consumeExistingPurchases() {
+        billingClient.queryPurchasesAsync(
+            QueryPurchasesParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+        ) { billingResult, purchases ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                purchases.forEach { purchase ->
+                    if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+                        val consumeParams = ConsumeParams.newBuilder()
+                            .setPurchaseToken(purchase.purchaseToken)
+                            .build()
+                        
+                        billingClient.consumeAsync(consumeParams) { consumeResult, _ ->
+                            if (consumeResult.responseCode != BillingClient.BillingResponseCode.OK) {
+                                _purchaseState.value = PurchaseState.Error("Failed to consume existing purchase")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -80,14 +113,23 @@ class BillingManager(
 
     private fun handlePurchase(purchase: Purchase) {
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-            // Grant the item to the user
             if (!purchase.isAcknowledged) {
                 val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
                     .build()
+                
                 billingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        _purchaseState.value = PurchaseState.PurchaseSuccessful
+                        // After acknowledging, consume the purchase to allow repurchasing
+                        val consumeParams = ConsumeParams.newBuilder()
+                            .setPurchaseToken(purchase.purchaseToken)
+                            .build()
+                        
+                        billingClient.consumeAsync(consumeParams) { consumeResult, _ ->
+                            if (consumeResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                                _purchaseState.value = PurchaseState.PurchaseSuccessful
+                            }
+                        }
                     }
                 }
             }
