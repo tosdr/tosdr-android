@@ -202,14 +202,14 @@ private suspend fun fetchTeam(): Team? {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val service = retrofit.create(TeamService::class.java)
-        service.getTeam()
-    } catch (e: Exception) {
+        val service: suspend () -> Team = retrofit.create(TeamService::class.java)::getTeam
+        service()
+    } catch (_: Exception) {
         null
     }
 }
 
-interface TeamService {
+fun interface TeamService {
     @GET("teams")
     suspend fun getTeam(): Team
 }

@@ -109,41 +109,11 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 // Badges Row
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                    modifier = Modifier.horizontalScroll(rememberScrollState())
-                                ) {
-                                    if (service.is_comprehensively_reviewed) {
-                                        Badge(
-                                            text = stringResource(R.string.service_reviewed),
-                                            icon = rememberVectorPainter(Icons.Rounded.Check),
-                                            color = BadgeColors.green
-                                        )
-                                    }
-                                    Badge(
-                                        text = stringResource(
-                                            R.string.service_grade,
-                                            service.rating
-                                        ),
-                                        icon = painterResource(R.drawable.ic_rounded_shield_24),
-                                        color = when (service.rating) {
-                                            "A" -> ToSDRColorScheme.gradeA
-                                            "B" -> ToSDRColorScheme.gradeB
-                                            "C" -> ToSDRColorScheme.gradeC
-                                            "D" -> ToSDRColorScheme.gradeD
-                                            "E" -> ToSDRColorScheme.gradeE
-                                            else -> ToSDRColorScheme.gradeNA
-                                        }
-                                    )
-                                    Badge(
-                                        text = stringResource(
-                                            R.string.service_point_cnt,
-                                            service.points.size
-                                        ),
-                                        icon = rememberVectorPainter(Icons.Rounded.Warning),
-                                        color = BadgeColors.blue
-                                    )
-                                }
+                                ServiceBadges(
+                                    isComprehensivelyReviewed = service.is_comprehensively_reviewed,
+                                    rating = service.rating,
+                                    pointsCount = service.points.size
+                                )
                             }
                         }
                     }
@@ -160,12 +130,7 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                             groupedPoints[classification]?.let { points ->
                                 item {
                                     PointsGroup(
-                                        title = when (classification) {
-                                            "blocker" -> stringResource(R.string.service_blocker)
-                                            "bad" -> stringResource(R.string.service_bad)
-                                            "good" -> stringResource(R.string.service_good)
-                                            else -> stringResource(R.string.service_neutral)
-                                        },
+                                        title = getClassificationString(classification),
                                         points = points,
                                         onPointClick = { point ->
                                             navController.navigate(
@@ -182,59 +147,13 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
                         }
                     }
 
-                    // Add Localization Warning and Toggle
                     if (viewModel.isLocalized()) {
                         item {
-                            Column(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth()
-                            ) {
-                                Card(
-                                    colors = CardDefaults.cardColors(
-                                        containerColor = MaterialTheme.colorScheme.errorContainer
-                                    ),
-                                    shape = RoundedCornerShape(24.dp)
-                                ) {
-                                    Row(
-                                        modifier = Modifier
-                                            .padding(16.dp)
-                                            .fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.ic_rounded_warning_24),
-                                            contentDescription = null,
-                                            tint = MaterialTheme.colorScheme.error
-                                        )
-                                        Spacer(modifier = Modifier.width(16.dp))
-                                        Column {
-                                            Text(
-                                                text = stringResource(R.string.service_localization_warning),
-                                                style = MaterialTheme.typography.titleMedium,
-                                                color = MaterialTheme.colorScheme.error
-                                            )
-                                            Text(
-                                                text = stringResource(R.string.service_localization_warning_desc),
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = MaterialTheme.colorScheme.onErrorContainer
-                                            )
-                                        }
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(stringResource(R.string.service_localization_show_original))
-                                    Switch(
-                                        checked = showOriginal,
-                                        onCheckedChange = { showOriginal = it }
-                                    )
-                                }
-                            }
+                            LocalizationWarning(
+                                showOriginal = showOriginal,
+                                onShowOriginalChanged = { showOriginal = it },
+                                modifier = Modifier.padding(16.dp)
+                            )
                         }
                     }
                 }
@@ -248,6 +167,14 @@ fun ServiceDetailsScreen(serviceId: Int, navController: NavController, viewModel
             }
         }
     }
+}
+
+@Composable
+private fun getClassificationString(classification: String): String = when (classification) {
+    "blocker" -> stringResource(R.string.service_blocker)
+    "bad" -> stringResource(R.string.service_bad)
+    "good" -> stringResource(R.string.service_good)
+    else -> stringResource(R.string.service_neutral)
 }
 
 @Composable
@@ -270,6 +197,100 @@ fun Badge(text: String, icon: Painter, color: Color) {
             text = text,
             color = Color.White,
             style = MaterialTheme.typography.labelMedium
+        )
+    }
+}
+
+@Composable
+private fun LocalizationWarning(
+    showOriginal: Boolean,
+    onShowOriginalChanged: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Card(
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer
+            ),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_rounded_warning_24),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.error
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text(
+                        text = stringResource(R.string.service_localization_warning),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Text(
+                        text = stringResource(R.string.service_localization_warning_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(stringResource(R.string.service_localization_show_original))
+            Switch(
+                checked = showOriginal,
+                onCheckedChange = onShowOriginalChanged
+            )
+        }
+    }
+}
+
+@Composable
+private fun ServiceBadges(
+    isComprehensivelyReviewed: Boolean,
+    rating: String,
+    pointsCount: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.horizontalScroll(rememberScrollState())
+    ) {
+        if (isComprehensivelyReviewed) {
+            Badge(
+                text = stringResource(R.string.service_reviewed),
+                icon = rememberVectorPainter(Icons.Rounded.Check),
+                color = BadgeColors.green
+            )
+        }
+        Badge(
+            text = stringResource(R.string.service_grade, rating),
+            icon = painterResource(R.drawable.ic_rounded_shield_24),
+            color = when (rating) {
+                "A" -> ToSDRColorScheme.gradeA
+                "B" -> ToSDRColorScheme.gradeB
+                "C" -> ToSDRColorScheme.gradeC
+                "D" -> ToSDRColorScheme.gradeD
+                "E" -> ToSDRColorScheme.gradeE
+                else -> ToSDRColorScheme.gradeNA
+            }
+        )
+        Badge(
+            text = stringResource(R.string.service_point_cnt, pointsCount),
+            icon = rememberVectorPainter(Icons.Rounded.Warning),
+            color = BadgeColors.blue
         )
     }
 }

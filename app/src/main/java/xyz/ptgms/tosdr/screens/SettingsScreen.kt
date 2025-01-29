@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.navigation.NavController
 import xyz.ptgms.tosdr.R
+import android.content.Context
+import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel.DbStats
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,19 +42,7 @@ fun SettingsScreen(navController: NavController, viewModel: ToSDRViewModel) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(
-                        onClick = { navController.navigateUp() }
-                    ) {
-                        Icon(
-                            Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.nav_back)
-                        )
-                    }
-                },
-                title = { Text(stringResource(R.string.settings)) }
-            )
+            SettingsTopBar(navController)
         }
     ) { padding ->
         Column(
@@ -61,152 +51,213 @@ fun SettingsScreen(navController: NavController, viewModel: ToSDRViewModel) {
                 .padding(padding)
                 .padding(horizontal = 16.dp)
         ) {
-            SettingsTitle(text = stringResource(R.string.settings_header_search))
-            SettingsGroup(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                SettingsRow(
-                    leading = { Icon(Icons.Default.Search, contentDescription = null) },
-                    title = {
-                        Column {
-                            Text(stringResource(R.string.settings_server_search))
-                            Text(
-                                stringResource(R.string.settings_server_search_desc),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                    },
-                    trailing = {
-                        Switch(
-                            checked = preferServerSearch,
-                            onCheckedChange = {
-                                viewModel.setPreferServerSearch(context, it)
-                            }
-                        )
+            SearchSettings(
+                preferServerSearch = preferServerSearch,
+                onPreferServerSearchChange = { viewModel.setPreferServerSearch(context, it) }
+            )
+            
+            DatabaseSettings(
+                dbStats = dbStats,
+                isLoading = isLoading,
+                context = context,
+                onRefreshDatabase = {
+                    viewModel.refreshDatabase(database) { success ->
+                        isLoading = false
+                        if (!success) showErrorDialog = true
                     }
-                )
-            }
-
-            SettingsTitle(text = stringResource(R.string.settings_header_database))
-
-            SettingsGroup(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                if (dbStats.entryCount == 0) {
-                    SettingsRow(
-                        leading = { Icon(Icons.Default.Close, contentDescription = null) },
-                        title = {
-                            Column {
-                                Text(stringResource(R.string.settings_database_none))
-                                Text(
-                                    stringResource(R.string.settings_database_none_desc),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
-                        }
-                    )
-                } else {
-                    SettingsRow(
-                        leading = { Icon(Icons.Default.DateRange, contentDescription = null) },
-                        title = {
-                            Column {
-                                Text(stringResource(R.string.settings_database_lastupdate))
-                                Text(
-                                    stringResource(R.string.settings_database_lastupdate_desc),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
-                        },
-                        trailing = {
-                            Text(
-                                SimpleDateFormat(
-                                    context.getString(R.string.date_format),
-                                    Locale.getDefault()
-                                )
-                                    .format(Date(dbStats.lastUpdate))
-                            )
-                        }
-                    )
-
-                    SettingsRow(
-                        leading = { Icon(Icons.Default.Build, contentDescription = null) },
-                        title = {
-                            Column {
-                                Text(stringResource(R.string.settings_database_services))
-                                Text(
-                                    stringResource(R.string.settings_database_services_desc),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
-                        },
-                        trailing = { Text(dbStats.entryCount.toString()) }
-                    )
-                }
-
-                SettingsRow(
-                    title = {
-                        Button(
-                            onClick = {
-                                viewModel.refreshDatabase(database) { success ->
-                                    isLoading = false
-                                    if (!success) showErrorDialog = true
-                                }
-                                isLoading = true
-                            },
-                            modifier = Modifier.weight(1f),
-                            enabled = !isLoading
-                        ) {
-                            Row(
-                                modifier = Modifier.weight(1f),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center,
-                            ) {
-                                Icon(Icons.Default.Refresh, contentDescription = null)
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    if (isLoading) stringResource(R.string.settings_database_refreshing) else stringResource(
-                                        R.string.settings_database_refresh
-                                    )
-                                )
-                                if (isLoading) {
-                                    Spacer(modifier = Modifier.width(4.dp))
-
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(16.dp),
-                                        strokeWidth = 2.dp
-                                    )
-                                }
-                            }
-                        }
-                    },
-                    trailing = {
-                        IconButton(
-                            onClick = { viewModel.deleteDatabase(database) },
-                            colors = IconButtonDefaults.iconButtonColors(
-                                contentColor = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Icon(
-                                Icons.Default.Delete,
-                                contentDescription = stringResource(R.string.settings_database_delete)
-                            )
-                        }
-                    }
-                )
-            }
+                    isLoading = true
+                },
+                onDeleteDatabase = { viewModel.deleteDatabase(database) }
+            )
         }
     }
 
     if (showErrorDialog) {
-        AlertDialog(
-            onDismissRequest = { showErrorDialog = false },
-            title = { Text(stringResource(R.string.dialog_error)) },
-            text = { Text(stringResource(R.string.dialog_update_db_error_desc)) },
-            confirmButton = {
-                TextButton(onClick = { showErrorDialog = false }) {
-                    Text(stringResource(R.string.dialog_ok))
+        DatabaseErrorDialog(onDismiss = { showErrorDialog = false })
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SettingsTopBar(navController: NavController) {
+    TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = { navController.navigateUp() }) {
+                Icon(
+                    Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.nav_back)
+                )
+            }
+        },
+        title = { Text(stringResource(R.string.settings)) }
+    )
+}
+
+@Composable
+private fun SearchSettings(
+    preferServerSearch: Boolean,
+    onPreferServerSearchChange: (Boolean) -> Unit
+) {
+    SettingsTitle(text = stringResource(R.string.settings_header_search))
+    SettingsGroup(modifier = Modifier.fillMaxWidth()) {
+        SettingsRow(
+            leading = { Icon(Icons.Default.Search, contentDescription = null) },
+            title = {
+                Column {
+                    Text(stringResource(R.string.settings_server_search))
+                    Text(
+                        stringResource(R.string.settings_server_search_desc),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 }
+            },
+            trailing = {
+                Switch(
+                    checked = preferServerSearch,
+                    onCheckedChange = onPreferServerSearchChange
+                )
             }
         )
     }
+}
+
+@Composable
+private fun DatabaseSettings(
+    dbStats: DbStats,
+    isLoading: Boolean,
+    context: Context,
+    onRefreshDatabase: () -> Unit,
+    onDeleteDatabase: () -> Unit
+) {
+    SettingsTitle(text = stringResource(R.string.settings_header_database))
+    SettingsGroup(modifier = Modifier.fillMaxWidth()) {
+        if (dbStats.entryCount == 0) {
+            EmptyDatabaseInfo()
+        } else {
+            DatabaseStats(dbStats, context)
+        }
+        DatabaseActions(
+            isLoading = isLoading,
+            onRefreshDatabase = onRefreshDatabase,
+            onDeleteDatabase = onDeleteDatabase
+        )
+    }
+}
+
+@Composable
+private fun EmptyDatabaseInfo() {
+    SettingsRow(
+        leading = { Icon(Icons.Default.Close, contentDescription = null) },
+        title = {
+            Column {
+                Text(stringResource(R.string.settings_database_none))
+                Text(
+                    stringResource(R.string.settings_database_none_desc),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun DatabaseStats(dbStats: DbStats, context: Context) {
+    SettingsRow(
+        leading = { Icon(Icons.Default.DateRange, contentDescription = null) },
+        title = {
+            Column {
+                Text(stringResource(R.string.settings_database_lastupdate))
+                Text(
+                    stringResource(R.string.settings_database_lastupdate_desc),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        },
+        trailing = {
+            Text(
+                SimpleDateFormat(
+                    context.getString(R.string.date_format),
+                    Locale.getDefault()
+                ).format(Date(dbStats.lastUpdate))
+            )
+        }
+    )
+
+    SettingsRow(
+        leading = { Icon(Icons.Default.Build, contentDescription = null) },
+        title = {
+            Column {
+                Text(stringResource(R.string.settings_database_services))
+                Text(
+                    stringResource(R.string.settings_database_services_desc),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        },
+        trailing = { Text(dbStats.entryCount.toString()) }
+    )
+}
+
+@Composable
+private fun DatabaseActions(
+    isLoading: Boolean,
+    onRefreshDatabase: () -> Unit,
+    onDeleteDatabase: () -> Unit
+) {
+    SettingsRow(
+        title = {
+            Button(
+                onClick = onRefreshDatabase,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isLoading
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Icon(Icons.Default.Refresh, contentDescription = null)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        if (isLoading) stringResource(R.string.settings_database_refreshing)
+                        else stringResource(R.string.settings_database_refresh)
+                    )
+                    if (isLoading) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(16.dp),
+                            strokeWidth = 2.dp
+                        )
+                    }
+                }
+            }
+        },
+        trailing = {
+            IconButton(
+                onClick = onDeleteDatabase,
+                colors = IconButtonDefaults.iconButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Icon(
+                    Icons.Default.Delete,
+                    contentDescription = stringResource(R.string.settings_database_delete)
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun DatabaseErrorDialog(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.dialog_error)) },
+        text = { Text(stringResource(R.string.dialog_update_db_error_desc)) },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.dialog_ok))
+            }
+        }
+    )
 }

@@ -3,6 +3,7 @@ package xyz.ptgms.tosdr.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.withContext
 import xyz.ptgms.tosdr.api.models.Point
 
-class ToSDRViewModel : ViewModel() {
+class ToSDRViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : ViewModel() {
     private val repository = ToSDRRepository()
     
     private val _searchResults = MutableStateFlow<List<ServiceBasic>>(emptyList())
@@ -59,7 +60,7 @@ class ToSDRViewModel : ViewModel() {
                     _searchResults.value = it
                 }
             } else {
-                withContext(Dispatchers.IO) {
+                withContext(dispatcher) {
                     database.serviceDao().searchServices("%$query%")
                         .take(20)
                         .collect { services ->
