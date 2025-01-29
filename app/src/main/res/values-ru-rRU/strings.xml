@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">О нас ToS;DR</string>
     <string name="team_title">Команда</string>
     <string name="donate_title">Пожертвовать</string>
-    <string name="home_search_placeholder">Поиск услуг...</string>
+    <string name="home_search_placeholder">Поиск услуги…</string>
     <string name="home_clear_search">Очистить поиск</string>
     <string name="nav_back">Назад</string>
     <string name="team_founders">Основатели</string>
@@ -26,18 +26,18 @@
     <string name="date_format">dd MMM yyyy</string>
     <string name="settings_database_services">Услуги</string>
     <string name="settings_database_services_desc">Количество услуг в базе данных</string>
-    <string name="settings_database_refreshing">Обновляется...</string>
+    <string name="settings_database_refreshing">Обновление…</string>
     <string name="settings_database_refresh">Обновить базу данных</string>
     <string name="settings_database_delete">Удалить базу данных</string>
     <string name="dialog_error">Ошибка</string>
     <string name="dialog_update_db_error_desc">Не удалось обновить базу данных. Пожалуйста, попробуйте ещё раз.</string>
     <string name="dialog_ok">ОК</string>
     <string name="open_in_browser">Открыть в браузере</string>
-    <string name="service_loading">Загрузка...</string>
+    <string name="service_loading">Загрузка…</string>
     <string name="service_logo_placeholder">логотип %1$s</string>
     <string name="service_reviewed">Проверено</string>
     <string name="service_grade">Оценка %1$s</string>
-    <string name="service_point_cnt">%1$s Points</string>
+    <string name="service_point_cnt">%1$s баллов</string>
     <string name="service_blocker">Блокирующие баллы</string>
     <string name="service_bad">Плохие баллы</string>
     <string name="service_good">Хорошие баллы</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">Покупка</string>
     <string name="donation_thanks_desc">Ваше пожертвование помогает нам поддерживать и улучшать ToS;DR для всех.</string>
     <string name="donation_thanks">Пожалуйста!</string>
+    <string name="share_question">Поиск рейтинга ToS;DR</string>
+    <string name="share_question_desc">Ты хочешь посмотреть рейтинг для %1$s?</string>
+    <string name="share_no_results">Я не смог найти никаких результатов, извини!</string>
 </resources>

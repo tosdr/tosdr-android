@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">Acerca de ToS;DR</string>
     <string name="team_title">Equipo</string>
     <string name="donate_title">Donar</string>
-    <string name="home_search_placeholder">Buscar un servicio...</string>
+    <string name="home_search_placeholder">Buscar un servicio…</string>
     <string name="home_clear_search">Borrar búsqueda</string>
     <string name="nav_back">Atrás</string>
     <string name="team_founders">Fundadores</string>
@@ -26,14 +26,14 @@
     <string name="date_format">dd MMM, yyyy</string>
     <string name="settings_database_services">Servicios</string>
     <string name="settings_database_services_desc">Número de servicios en la base de datos</string>
-    <string name="settings_database_refreshing">Actualizando...</string>
+    <string name="settings_database_refreshing">Actualizando…</string>
     <string name="settings_database_refresh">Actualizar Base de Datos</string>
     <string name="settings_database_delete">Eliminar Base de Datos</string>
     <string name="dialog_error">Error</string>
     <string name="dialog_update_db_error_desc">No se pudo actualizar la base de datos. Por favor, inténtelo de nuevo.</string>
     <string name="dialog_ok">Aceptar</string>
     <string name="open_in_browser">Abrir en el Navegador</string>
-    <string name="service_loading">Cargando...</string>
+    <string name="service_loading">Cargando…</string>
     <string name="service_logo_placeholder">logo %1$s</string>
     <string name="service_reviewed">Revisado</string>
     <string name="service_grade">Grado %1$s</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">Comprar</string>
     <string name="donation_thanks_desc">Tu donación nos ayuda a mantener y mejorar ToS;DR para todos.</string>
     <string name="donation_thanks">¡Gracias!</string>
+    <string name="share_question">ToS;DR Rating Lookup</string>
+    <string name="share_question_desc">¿Deseas buscar la calificación para %1$s?</string>
+    <string name="share_no_results">¡No pude encontrar ningún resultado, lo siento!</string>
 </resources>

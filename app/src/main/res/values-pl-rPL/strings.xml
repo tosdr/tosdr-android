@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">O ToS;DR</string>
     <string name="team_title">Zespół</string>
     <string name="donate_title">Darowizna</string>
-    <string name="home_search_placeholder">Szukaj usług...</string>
+    <string name="home_search_placeholder">Szukaj usługi…</string>
     <string name="home_clear_search">Wyczyść wyszukiwanie</string>
     <string name="nav_back">Powrót</string>
     <string name="team_founders">Założyciele</string>
@@ -26,14 +26,14 @@
     <string name="date_format">MMM dd, yyyy</string>
     <string name="settings_database_services">Usługi</string>
     <string name="settings_database_services_desc">Liczba usług w bazie danych</string>
-    <string name="settings_database_refreshing">Odświeżanie...</string>
+    <string name="settings_database_refreshing">Odświeżanie…</string>
     <string name="settings_database_refresh">Odśwież bazę danych</string>
     <string name="settings_database_delete">Usuń bazę danych</string>
     <string name="dialog_error">Błąd</string>
     <string name="dialog_update_db_error_desc">Nie udało się zaktualizować bazy danych. Spróbuj ponownie.</string>
     <string name="dialog_ok">OK</string>
     <string name="open_in_browser">Otwórz w przeglądarce</string>
-    <string name="service_loading">Ładuje...</string>
+    <string name="service_loading">Ładowanie…</string>
     <string name="service_logo_placeholder">logo %1$s</string>
     <string name="service_reviewed">Przejrzane</string>
     <string name="service_grade">Ocena %1$s</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">Zakup</string>
     <string name="donation_thanks_desc">Twoja darowizna pomaga nam utrzymać i poprawić ToS;DR dla wszystkich.</string>
     <string name="donation_thanks">Dziękuję!</string>
+    <string name="share_question">ToS;DR Wyszukiwanie Oceny</string>
+    <string name="share_question_desc">Czy chcesz wyszukać ocenę dla %1$s?</string>
+    <string name="share_no_results">Nie mogłem znaleźć żadnych wyników, przepraszam!</string>
 </resources>

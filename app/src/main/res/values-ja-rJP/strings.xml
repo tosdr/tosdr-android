@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">ToS;DRについて</string>
     <string name="team_title">チーム</string>
     <string name="donate_title">寄付</string>
-    <string name="home_search_placeholder">サービスを検索...</string>
+    <string name="home_search_placeholder">サービスを検索…</string>
     <string name="home_clear_search">検索をクリア</string>
     <string name="nav_back">戻る</string>
     <string name="team_founders">創設者</string>
@@ -26,14 +26,14 @@
     <string name="date_format">MMM dd, yyyy</string>
     <string name="settings_database_services">サービス</string>
     <string name="settings_database_services_desc">データベース内のサービス数</string>
-    <string name="settings_database_refreshing">更新中...</string>
+    <string name="settings_database_refreshing">更新中…</string>
     <string name="settings_database_refresh">データベースを更新</string>
     <string name="settings_database_delete">データベースを削除</string>
     <string name="dialog_error">エラー</string>
     <string name="dialog_update_db_error_desc">データベースの更新に失敗しました。もう一度試して下さい。</string>
     <string name="dialog_ok">OK</string>
     <string name="open_in_browser">ブラウザで開く</string>
-    <string name="service_loading">読み込み中...</string>
+    <string name="service_loading">読み込み中…</string>
     <string name="service_logo_placeholder">%1$s ロゴ</string>
     <string name="service_reviewed">レビュー済み</string>
     <string name="service_grade">グレード %1$s</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">購入</string>
     <string name="donation_thanks_desc">ご寄付は、皆様のためにToS;DRを維持し改善するのに役立ちます。</string>
     <string name="donation_thanks">どういたしまして！</string>
+    <string name="share_question">ToS;DR Rating Lookup</string>
+    <string name="share_question_desc">%1$s の評価を調べますか？</string>
+    <string name="share_no_results">申し訳ありませんが、結果は見つかりませんでした。</string>
 </resources>

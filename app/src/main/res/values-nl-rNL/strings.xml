@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">Over ToS;DR</string>
     <string name="team_title">Team</string>
     <string name="donate_title">Doneer</string>
-    <string name="home_search_placeholder">Zoek naar een service...</string>
+    <string name="home_search_placeholder">Zoek naar een service…</string>
     <string name="home_clear_search">Zoekopdracht wissen</string>
     <string name="nav_back">Terug</string>
     <string name="team_founders">Oprichters</string>
@@ -26,14 +26,14 @@
     <string name="date_format">MMM dd, yyyy</string>
     <string name="settings_database_services">Diensten</string>
     <string name="settings_database_services_desc">Aantal diensten in de database</string>
-    <string name="settings_database_refreshing">Vernieuwen...</string>
+    <string name="settings_database_refreshing">Vernieuwen…</string>
     <string name="settings_database_refresh">Database Vernieuwen</string>
     <string name="settings_database_delete">Database Verwijderen</string>
     <string name="dialog_error">Fout</string>
     <string name="dialog_update_db_error_desc">Kan database niet bijwerken. Probeer het opnieuw.</string>
     <string name="dialog_ok">OK</string>
     <string name="open_in_browser">Open in Browser</string>
-    <string name="service_loading">Laden...</string>
+    <string name="service_loading">Laden…</string>
     <string name="service_logo_placeholder">%1$s logo</string>
     <string name="service_reviewed">Beoordeeld</string>
     <string name="service_grade">Rang %1$s</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">Aanschaffen</string>
     <string name="donation_thanks_desc">Jouw donatie helpt ons om ToS;DR voor iedereen te behouden en te verbeteren.</string>
     <string name="donation_thanks">Bedankt!</string>
+    <string name="share_question">ToS;DR Beoordeling Opzoeken</string>
+    <string name="share_question_desc">Wil je de beoordeling voor %1$s opzoeken?</string>
+    <string name="share_no_results">Ik kon geen resultaten vinden, sorry!</string>
 </resources>

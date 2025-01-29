@@ -111,4 +111,7 @@
     <string name="donate_purchase">Purchase</string>
     <string name="donation_thanks_desc">Your donation helps us maintain and improve ToS;DR for everyone.</string>
     <string name="donation_thanks">Thank You!</string>
+    <string name="share_question">ToS;DR Rating Lookup</string>
+    <string name="share_question_desc">Do you wish to look up the rating for %1$s?</string>
+    <string name="share_no_results">I could not find any results, sorry!</string>
 </resources>

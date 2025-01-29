@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">关于 ToS;DR</string>
     <string name="team_title">团队</string>
     <string name="donate_title">捐赠</string>
-    <string name="home_search_placeholder">搜索服务...</string>
+    <string name="home_search_placeholder">搜索服务…</string>
     <string name="home_clear_search">清除搜索</string>
     <string name="nav_back">返回</string>
     <string name="team_founders">创始人</string>
@@ -26,14 +26,14 @@
     <string name="date_format">MMM dd, yyyy</string>
     <string name="settings_database_services">服务</string>
     <string name="settings_database_services_desc">数据库中的服务数量</string>
-    <string name="settings_database_refreshing">刷新中...</string>
+    <string name="settings_database_refreshing">刷新中…</string>
     <string name="settings_database_refresh">刷新数据库</string>
     <string name="settings_database_delete">删除数据库</string>
     <string name="dialog_error">错误</string>
     <string name="dialog_update_db_error_desc">更新数据库失败。请再试一次。</string>
     <string name="dialog_ok">确定</string>
     <string name="open_in_browser">在浏览器中打开</string>
-    <string name="service_loading">加载中...</string>
+    <string name="service_loading">加载中…</string>
     <string name="service_logo_placeholder">%1$s 标志</string>
     <string name="service_reviewed">已复审</string>
     <string name="service_grade">等级 %1$s</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">购买</string>
     <string name="donation_thanks_desc">您的捐赠帮助我们维护和改进 ToS;DR，使每个人都受益。</string>
     <string name="donation_thanks">谢谢你！</string>
+    <string name="share_question">ToS;DR Rating Lookup</string>
+    <string name="share_question_desc">你想查看 %1$s 的评级吗？</string>
+    <string name="share_no_results">抱歉，我找不到任何结果！</string>
 </resources>

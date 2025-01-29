@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">Über ToS;DR</string>
     <string name="team_title">Team</string>
     <string name="donate_title">Spenden</string>
-    <string name="home_search_placeholder">Suche nach Diensten...</string>
+    <string name="home_search_placeholder">Suche nach einem Dienst…</string>
     <string name="home_clear_search">Suche löschen</string>
     <string name="nav_back">Zurück</string>
     <string name="team_founders">Gründer</string>
@@ -26,14 +26,14 @@
     <string name="date_format">dd MMM, yyyy</string>
     <string name="settings_database_services">Dienste</string>
     <string name="settings_database_services_desc">Anzahl der Dienste in der Datenbank</string>
-    <string name="settings_database_refreshing">Aktualisiere...</string>
+    <string name="settings_database_refreshing">Aktualisieren…</string>
     <string name="settings_database_refresh">Datenbank aktualisieren</string>
     <string name="settings_database_delete">Datenbank löschen</string>
     <string name="dialog_error">Fehler</string>
     <string name="dialog_update_db_error_desc">Fehler beim Aktualisieren der Datenbank. Bitte versuche es erneut.</string>
     <string name="dialog_ok">OK</string>
     <string name="open_in_browser">Im Browser öffnen</string>
-    <string name="service_loading">Wird geladen...</string>
+    <string name="service_loading">Laden…</string>
     <string name="service_logo_placeholder">%1$s Logo</string>
     <string name="service_reviewed">Überprüft</string>
     <string name="service_grade">Note %1$s</string>
@@ -43,7 +43,7 @@
     <string name="service_good">Gute Punkte</string>
     <string name="service_neutral">Neutrale Punkte</string>
     <string name="service_localization_warning">Warnung</string>
-    <string name="service_localization_warning_desc">Die obigen Punkte wurden maschinell übersetzt. Sie können nicht genau sein und wir empfehlen, den ursprünglichen Punkt zu überprüfen, um die Genauigkeit zu überprüfen.</string>
+    <string name="service_localization_warning_desc">Die obigen Punkte wurden maschinell übersetzt. Sie können nicht % genau sein und wir empfehlen Ihnen, den ursprünglichen Punkt zu überprüfen, um die Genauigkeit zu überprüfen.</string>
     <string name="service_localization_show_original">Originaltitel anzeigen</string>
     <string name="point_details">Punktdetails</string>
     <string name="point_original_point">Ursprünglicher Punkt</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">Kaufen</string>
     <string name="donation_thanks_desc">Deine Spende hilft uns, ToS;DR für alle aufrechtzuerhalten und zu verbessern.</string>
     <string name="donation_thanks">Vielen Dank!</string>
+    <string name="share_question">ToS;DR Bewertungssuche</string>
+    <string name="share_question_desc">Möchtest du die Bewertung für %1$s nachschlagen?</string>
+    <string name="share_no_results">Ich konnte leider keine Ergebnisse finden!</string>
 </resources>

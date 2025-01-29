@@ -35,9 +35,19 @@ import androidx.compose.animation.core.tween
 class MainActivity : ComponentActivity() {
     private lateinit var database: ToSDRDatabase
     private val viewModel: ToSDRViewModel by viewModels()
+    
+    // Store the initial deep link intent
+    private var initialServiceId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Parse deep link before setting content
+        intent?.data?.let { uri ->
+            if (uri.scheme == "tosdr" && uri.host == "service") {
+                initialServiceId = uri.lastPathSegment?.toIntOrNull()
+            }
+        }
 
         enableEdgeToEdge()
 
@@ -58,7 +68,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(viewModel)
+                    MainScreen(viewModel, initialServiceId)
                 }
             }
         }
@@ -67,8 +77,15 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: ToSDRViewModel) {
+fun MainScreen(viewModel: ToSDRViewModel, initialServiceId: Int?) {
     val navController = rememberNavController()
+    
+    // Handle deep link navigation after composition
+    LaunchedEffect(initialServiceId) {
+        initialServiceId?.let { serviceId ->
+            navController.navigate(Screen.ServiceDetails.createRoute(serviceId))
+        }
+    }
     
     Scaffold(
         modifier = Modifier.fillMaxSize(),

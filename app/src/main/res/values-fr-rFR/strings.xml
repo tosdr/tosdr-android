@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">À propos de ToS;DR</string>
     <string name="team_title">Équipe</string>
     <string name="donate_title">Faire un don</string>
-    <string name="home_search_placeholder">Rechercher des services...</string>
+    <string name="home_search_placeholder">Rechercher un service…</string>
     <string name="home_clear_search">Effacer la recherche</string>
     <string name="nav_back">Retour</string>
     <string name="team_founders">Les fondateurs</string>
@@ -26,14 +26,14 @@
     <string name="date_format">MMM jj, aaaa</string>
     <string name="settings_database_services">Services</string>
     <string name="settings_database_services_desc">Nombre de services dans la base de données</string>
-    <string name="settings_database_refreshing">Actualisation...</string>
+    <string name="settings_database_refreshing">Rafraîchissement…</string>
     <string name="settings_database_refresh">Rafraîchir la base de données</string>
     <string name="settings_database_delete">Supprimer la base de données</string>
     <string name="dialog_error">Erreur</string>
     <string name="dialog_update_db_error_desc">Échec de la mise à jour de la base de données. Veuillez réessayer.</string>
     <string name="dialog_ok">OK</string>
     <string name="open_in_browser">Ouvrir dans le navigateur</string>
-    <string name="service_loading">Chargement...</string>
+    <string name="service_loading">Chargement…</string>
     <string name="service_logo_placeholder">logo %1$s</string>
     <string name="service_reviewed">Révisé</string>
     <string name="service_grade">Niveau %1$s</string>
@@ -111,4 +111,7 @@
     <string name="donate_purchase">Acheter</string>
     <string name="donation_thanks_desc">Votre don nous aide à maintenir et à améliorer ToS;DR pour tout le monde.</string>
     <string name="donation_thanks">Merci de votre attention !</string>
+    <string name="share_question">Recherche de note ToS;DR</string>
+    <string name="share_question_desc">Souhaitez-vous rechercher la note pour %1$s ?</string>
+    <string name="share_no_results">Je n\'ai trouvé aucun résultat, désolé !</string>
 </resources>
