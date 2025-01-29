@@ -5,7 +5,7 @@
     <string name="home_about_tos_dr">About ToS;DR</string>
     <string name="team_title">Team</string>
     <string name="donate_title">Donate</string>
-    <string name="home_search_placeholder">Search for services...</string>
+    <string name="home_search_placeholder">Search for services…</string>
     <string name="home_clear_search">Clear search</string>
     <string name="nav_back">Back</string>
     <string name="team_founders">Founders</string>
@@ -26,14 +26,14 @@
     <string name="date_format">MMM dd, yyyy</string>
     <string name="settings_database_services">Services</string>
     <string name="settings_database_services_desc">Number of services in the database</string>
-    <string name="settings_database_refreshing">Refreshing...</string>
+    <string name="settings_database_refreshing">Refreshing…</string>
     <string name="settings_database_refresh">Refresh Database</string>
     <string name="settings_database_delete">Delete Database</string>
     <string name="dialog_error">Error</string>
     <string name="dialog_update_db_error_desc">Failed to update the database. Please try again.</string>
     <string name="dialog_ok">OK</string>
     <string name="open_in_browser">Open in Browser</string>
-    <string name="service_loading">Loading...</string>
+    <string name="service_loading">Loading…</string>
     <string name="service_logo_placeholder">%1$s logo</string>
     <string name="service_reviewed">Reviewed</string>
     <string name="service_grade">Grade %1$s</string>
