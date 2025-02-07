@@ -71,7 +71,7 @@ fun PointsRow(
                         text = if (!original && point.case.localized_title != null) {
                             point.case.localized_title
                         } else {
-                            point.case.title
+                            point.title
                         },
                         style = MaterialTheme.typography.bodyLarge
                     )
