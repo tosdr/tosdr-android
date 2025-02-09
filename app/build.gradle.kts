@@ -14,7 +14,7 @@ android {
         applicationId = "xyz.ptgms.tosdr"
         minSdk = 24
         targetSdk = 35
-        versionCode = 31
+        versionCode = 35
         versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -28,6 +28,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            applicationIdSuffix = ".debug"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -38,6 +41,19 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    flavorDimensions += "billing"
+    productFlavors {
+        create("google") {
+            dimension = "billing"
+            buildConfigField("String", "FLAVOR", "\"google\"")
+        }
+        create("foss") {
+            dimension = "billing"
+            buildConfigField("String", "FLAVOR", "\"foss\"")
+        }
     }
 }
 
@@ -60,7 +76,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.billing)
     implementation(libs.compose.markdown)
     implementation(libs.aboutlibraries.core)
 
@@ -73,4 +88,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     runtimeOnly(libs.aboutlibraries)
+
+    "googleImplementation"(libs.billing)
 }

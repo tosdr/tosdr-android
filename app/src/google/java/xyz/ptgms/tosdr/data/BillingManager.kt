@@ -8,15 +8,20 @@ import kotlinx.coroutines.flow.StateFlow
 
 class BillingManager(
     context: Context
-) : PurchasesUpdatedListener, BillingClientStateListener {
+) : PurchasesUpdatedListener, BillingClientStateListener, BillingManagerInterface {
 
     private var billingClient: BillingClient = BillingClient.newBuilder(context)
         .setListener(this)
         .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
         .build()
 
-    private val _purchaseState = MutableStateFlow<PurchaseState>(PurchaseState.IDLE)
-    val purchaseState: StateFlow<PurchaseState> = _purchaseState
+    private val _purchaseState = MutableStateFlow<BillingManagerInterface.PurchaseState>(
+        BillingManagerInterface.PurchaseState.IDLE
+    )
+    override val purchaseState: StateFlow<BillingManagerInterface.PurchaseState> = _purchaseState
+
+    // Store the original ProductDetails objects
+    private var productDetailsMap: Map<String, ProductDetails> = emptyMap()
 
     init {
         billingClient.startConnection(this)
@@ -24,14 +29,12 @@ class BillingManager(
 
     override fun onBillingSetupFinished(billingResult: BillingResult) {
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            // Billing client is ready
             queryAvailableProducts()
             consumeExistingPurchases()
         }
     }
 
     override fun onBillingServiceDisconnected() {
-        // Try to restart the connection on the next request
         billingClient.startConnection(this)
     }
 
@@ -68,11 +71,20 @@ class BillingManager(
 
         billingClient.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                // Sort products by amount
                 val sortedProducts = productDetailsList.sortedBy { 
                     it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0L
                 }
-                _purchaseState.value = PurchaseState.ProductsAvailable(sortedProducts)
+                // Store the ProductDetails for later use
+                productDetailsMap = sortedProducts.associateBy { it.productId }
+                
+                val mappedProducts = sortedProducts.map { details ->
+                    BillingManagerInterface.ProductInfo(
+                        id = details.productId,
+                        name = details.name,
+                        price = details.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                    )
+                }
+                _purchaseState.value = BillingManagerInterface.PurchaseState.ProductsAvailable(mappedProducts)
             }
         }
     }
@@ -92,7 +104,7 @@ class BillingManager(
                         
                         billingClient.consumeAsync(consumeParams) { consumeResult, _ ->
                             if (consumeResult.responseCode != BillingClient.BillingResponseCode.OK) {
-                                _purchaseState.value = PurchaseState.Error("Failed to consume existing purchase")
+                                _purchaseState.value = BillingManagerInterface.PurchaseState.Error("Failed to consume existing purchase")
                             }
                         }
                     }
@@ -101,18 +113,21 @@ class BillingManager(
         }
     }
 
-    fun launchBillingFlow(activity: Activity, productDetails: ProductDetails) {
-        val billingFlowParams = BillingFlowParams.newBuilder()
-            .setProductDetailsParamsList(
-                listOf(
-                    BillingFlowParams.ProductDetailsParams.newBuilder()
-                        .setProductDetails(productDetails)
-                        .build()
+    override fun launchBillingFlow(activity: Activity, product: BillingManagerInterface.ProductInfo) {
+        val productDetails = productDetailsMap[product.id]
+        if (productDetails != null) {
+            val billingFlowParams = BillingFlowParams.newBuilder()
+                .setProductDetailsParamsList(
+                    listOf(
+                        BillingFlowParams.ProductDetailsParams.newBuilder()
+                            .setProductDetails(productDetails)
+                            .build()
+                    )
                 )
-            )
-            .build()
+                .build()
 
-        billingClient.launchBillingFlow(activity, billingFlowParams)
+            billingClient.launchBillingFlow(activity, billingFlowParams)
+        }
     }
 
     private fun handlePurchase(purchase: Purchase) {
@@ -123,26 +138,17 @@ class BillingManager(
 
             billingClient.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    // After acknowledging, consume the purchase to allow repurchasing
                     val consumeParams = ConsumeParams.newBuilder()
                         .setPurchaseToken(purchase.purchaseToken)
                         .build()
 
                     billingClient.consumeAsync(consumeParams) { consumeResult, _ ->
                         if (consumeResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                            _purchaseState.value = PurchaseState.PurchaseSuccessful
+                            _purchaseState.value = BillingManagerInterface.PurchaseState.PurchaseSuccessful
                         }
                     }
                 }
             }
-
         }
-    }
-
-    sealed class PurchaseState {
-        object IDLE : PurchaseState()
-        data class ProductsAvailable(val products: List<ProductDetails>) : PurchaseState()
-        object PurchaseSuccessful : PurchaseState()
-        data class Error(val message: String) : PurchaseState()
     }
 }
