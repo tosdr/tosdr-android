@@ -1,0 +1,2 @@
+Added variant for FOSS builds
+Fixed bug in display of points
