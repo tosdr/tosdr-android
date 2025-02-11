@@ -14,8 +14,8 @@ android {
         applicationId = "xyz.ptgms.tosdr"
         minSdk = 24
         targetSdk = 35
-        versionCode = 40
-        versionName = "2.1"
+        versionCode = 41
+        versionName = "2.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,6 +27,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
         debug {
             applicationIdSuffix = ".debug"

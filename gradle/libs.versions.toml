@@ -1,6 +1,6 @@
 [versions]
-aboutlibraries = "10.9.2"
-aboutlibrariesCore = "11.2.3"
+aboutlibraries = "11.5.0"
+aboutlibrariesCore = "11.5.0"
 agp = "8.8.0"
 billing = "7.1.1"
 coilCompose = "2.7.0"
