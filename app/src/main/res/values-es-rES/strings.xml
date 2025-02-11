@@ -111,7 +111,18 @@
     <string name="donate_purchase">Comprar</string>
     <string name="donation_thanks_desc">Tu donación nos ayuda a mantener y mejorar ToS;DR para todos.</string>
     <string name="donation_thanks">¡Gracias!</string>
-    <string name="share_question">ToS;DR Rating Lookup</string>
+    <string name="share_question">Búsqueda de Calificación ToS;DR</string>
     <string name="share_question_desc">¿Deseas buscar la calificación para %1$s?</string>
     <string name="share_no_results">¡No pude encontrar ningún resultado, lo siento!</string>
+    <string name="nongplay_donation_title">Opciones de Donación</string>
+    <string name="nongplay_donation_desc">¡Gracias por usar ToS;DR fuera de la tienda de Google Play! Tu apoyo significa mucho para nosotros. Te invitamos a explorar nuestras opciones de donación y contribuir a nuestra misión. ¡Cada pequeño apoyo es muy apreciado!</string>
+    <string name="nongplay_donation_opencollective">Apóyanos en OpenCollective</string>
+    <string name="nongplay_donation_crypto">Criptomoneda</string>
+    <string name="settings_about">Acerca de</string>
+    <string name="settings_about_version">ToS;DR; Versión %1$s</string>
+    <string name="settings_about_variant">Estás ejecutando la variante \'%1$s\'.</string>
+    <string name="settings_api">Configuración de API</string>
+    <string name="settings_api_endpoint">Punto final de API</string>
+    <string name="settings_api_endpoint_select">Seleccionar punto final de API</string>
+    <string name="settings_api_endpoint_custom">URL personalizada...</string>
 </resources>

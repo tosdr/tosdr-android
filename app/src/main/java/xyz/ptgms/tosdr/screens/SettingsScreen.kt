@@ -156,13 +156,13 @@ private fun ApiSettings(
         "https://api.staging.tosdr.org/"
     )
 
-    SettingsTitle(text = "API Settings")
+    SettingsTitle(text = stringResource(R.string.settings_api))
     SettingsGroup(modifier = Modifier.fillMaxWidth()) {
         SettingsRow(
             leading = { Icon(painterResource(R.drawable.ic_rounded_api_24), contentDescription = null) },
             title = {
                 Column {
-                    Text("API Endpoint")
+                    Text(stringResource(R.string.settings_api_endpoint))
                     Text(
                         currentBaseUrl,
                         style = MaterialTheme.typography.bodySmall
@@ -172,7 +172,7 @@ private fun ApiSettings(
             trailing = {
                 Box {
                     IconButton(onClick = { expanded = true }) {
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Select API endpoint")
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = stringResource(R.string.settings_api_endpoint_select))
                     }
                     DropdownMenu(
                         expanded = expanded,
@@ -188,7 +188,7 @@ private fun ApiSettings(
                             )
                         }
                         DropdownMenuItem(
-                            text = { Text("Custom URL...") },
+                            text = { Text(stringResource(R.string.settings_api_endpoint_custom)) },
                             onClick = {
                                 expanded = false
                                 onShowCustomUrlDialog()
@@ -337,9 +337,9 @@ private fun AboutAppSettings() {
             leading = { Icon(Icons.Default.Info, contentDescription = null) },
             title = {
                 Column {
-                    Text("ToS;DR; Version ${BuildConfig.VERSION_NAME}")
+                    Text(stringResource(R.string.settings_about_version, BuildConfig.VERSION_NAME))
                     Text(
-                        "You are running the variant '${BuildConfig.FLAVOR}'.",
+                        stringResource(R.string.settings_about_variant, BuildConfig.FLAVOR),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

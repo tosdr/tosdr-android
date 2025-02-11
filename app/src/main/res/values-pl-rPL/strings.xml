@@ -114,4 +114,15 @@
     <string name="share_question">ToS;DR Wyszukiwanie Oceny</string>
     <string name="share_question_desc">Czy chcesz wyszukać ocenę dla %1$s?</string>
     <string name="share_no_results">Nie mogłem znaleźć żadnych wyników, przepraszam!</string>
+    <string name="nongplay_donation_title">Opcje darowizn</string>
+    <string name="nongplay_donation_desc">Dziękujemy za korzystanie z ToS;DR poza sklepem Google Play! Twoje wsparcie wiele dla nas znaczy. Zapraszamy do zapoznania się z naszymi opcjami darowizn i wsparcia naszej misji. Każda pomoc jest bardzo doceniana!</string>
+    <string name="nongplay_donation_opencollective">Wspieraj nas na OpenCollective</string>
+    <string name="nongplay_donation_crypto">Kryptowaluty</string>
+    <string name="settings_about">O nas</string>
+    <string name="settings_about_version">ToS;DR; Wersja %1$s</string>
+    <string name="settings_about_variant">Korzystasz z wariantu \"%1$s\".</string>
+    <string name="settings_api">Ustawienia API</string>
+    <string name="settings_api_endpoint">Punkt końcowy API</string>
+    <string name="settings_api_endpoint_select">Wybierz punkt końcowy API</string>
+    <string name="settings_api_endpoint_custom">Niestandardowy URL...</string>
 </resources>

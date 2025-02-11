@@ -111,7 +111,18 @@
     <string name="donate_purchase">购买</string>
     <string name="donation_thanks_desc">您的捐赠帮助我们维护和改进 ToS;DR，使每个人都受益。</string>
     <string name="donation_thanks">谢谢你！</string>
-    <string name="share_question">ToS;DR Rating Lookup</string>
+    <string name="share_question">ToS;DR 评级查找</string>
     <string name="share_question_desc">你想查看 %1$s 的评级吗？</string>
     <string name="share_no_results">抱歉，我找不到任何结果！</string>
+    <string name="nongplay_donation_title">捐赠选项</string>
+    <string name="nongplay_donation_desc">感谢您在 Google Play 商店外使用 ToS;DR！您的支持对我们非常重要。我们邀请您探索我们的捐赠选项，并为我们的使命贡献力量。每一点支持我们都非常感激！</string>
+    <string name="nongplay_donation_opencollective">在 OpenCollective 上支持我们</string>
+    <string name="nongplay_donation_crypto">加密货币</string>
+    <string name="settings_about">关于</string>
+    <string name="settings_about_version">ToS;DR; 版本 %1$s</string>
+    <string name="settings_about_variant">您正在运行变体 \'%1$s\'。</string>
+    <string name="settings_api">API 设置</string>
+    <string name="settings_api_endpoint">API 端点</string>
+    <string name="settings_api_endpoint_select">选择 API 端点</string>
+    <string name="settings_api_endpoint_custom">自定义 URL……</string>
 </resources>

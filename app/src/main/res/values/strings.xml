@@ -119,4 +119,10 @@
     <string name="nongplay_donation_opencollective">Support us on OpenCollective</string>
     <string name="nongplay_donation_crypto">Cryptocurrency</string>
     <string name="settings_about">About</string>
+    <string name="settings_about_version">ToS;DR; Version %1$s</string>
+    <string name="settings_about_variant">You are running the variant \'%1$s\'.</string>
+    <string name="settings_api">API Settings</string>
+    <string name="settings_api_endpoint">API Endpoint</string>
+    <string name="settings_api_endpoint_select">Select API endpoint</string>
+    <string name="settings_api_endpoint_custom">Custom URL...</string>
 </resources>

@@ -114,4 +114,15 @@
     <string name="share_question">Поиск рейтинга ToS;DR</string>
     <string name="share_question_desc">Ты хочешь посмотреть рейтинг для %1$s?</string>
     <string name="share_no_results">Я не смог найти никаких результатов, извини!</string>
+    <string name="nongplay_donation_title">Опции пожертвований</string>
+    <string name="nongplay_donation_desc">Спасибо за использование ToS;DR вне магазина Google Play! Ваша поддержка очень важна для нас. Мы приглашаем вас изучить наши опции пожертвований и внести вклад в нашу миссию. Каждая поддержка очень ценится!</string>
+    <string name="nongplay_donation_opencollective">Поддержите нас на OpenCollective</string>
+    <string name="nongplay_donation_crypto">Криптовалюта</string>
+    <string name="settings_about">О нас</string>
+    <string name="settings_about_version">ToS;DR; Версия %1$s</string>
+    <string name="settings_about_variant">Вы используете вариант \'%1$s\'.</string>
+    <string name="settings_api">Настройки API</string>
+    <string name="settings_api_endpoint">API-Endpoint</string>
+    <string name="settings_api_endpoint_select">Выбрать API-endpoint</string>
+    <string name="settings_api_endpoint_custom">Пользовательский URL...</string>
 </resources>
