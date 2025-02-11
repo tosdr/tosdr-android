@@ -44,6 +44,10 @@ android {
         buildConfig = true
     }
 
+    dependenciesInfo {
+        includeInApk = false
+    }
+
     flavorDimensions += "billing"
     productFlavors {
         create("google") {
