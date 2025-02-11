@@ -43,6 +43,9 @@ class ToSDRViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.I
     
     private val _preferServerSearch = MutableStateFlow(false)
     val preferServerSearch: StateFlow<Boolean> = _preferServerSearch
+
+    private val _baseUrl = MutableStateFlow(ApiClient.defaultUrl)
+    val baseUrl: StateFlow<String> = _baseUrl
     
     private val searchJob = Job()
     private var searchDebounceJob: Job? = null
@@ -151,16 +154,31 @@ class ToSDRViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.I
     }
 
     fun loadPreferences(context: Context) {
-        val prefs = context.getSharedPreferences("tosdr_preferences", Context.MODE_PRIVATE)
-        _preferServerSearch.value = prefs.getBoolean("prefer_server_search", false)
+        viewModelScope.launch(dispatcher) {
+            val prefs = context.getSharedPreferences("tosdr_prefs", Context.MODE_PRIVATE)
+            _preferServerSearch.value = prefs.getBoolean("prefer_server_search", false)
+            _baseUrl.value = prefs.getString("base_url", ApiClient.defaultUrl) ?: ApiClient.defaultUrl
+            ApiClient.updateBaseUrl(_baseUrl.value)
+        }
     }
 
     fun setPreferServerSearch(context: Context, value: Boolean) {
-        context.getSharedPreferences("tosdr_preferences", Context.MODE_PRIVATE)
+        context.getSharedPreferences("tosdr_prefs", Context.MODE_PRIVATE)
             .edit()
             .putBoolean("prefer_server_search", value)
             .apply()
         _preferServerSearch.value = value
+    }
+
+    fun setBaseUrl(context: Context, url: String) {
+        viewModelScope.launch(dispatcher) {
+            context.getSharedPreferences("tosdr_prefs", Context.MODE_PRIVATE)
+                .edit()
+                .putString("base_url", url)
+                .apply()
+            _baseUrl.value = url
+            ApiClient.updateBaseUrl(url)
+        }
     }
 
     fun setSearchQuery(query: String) {

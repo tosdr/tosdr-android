@@ -22,7 +22,11 @@ import java.util.*
 import androidx.navigation.NavController
 import xyz.ptgms.tosdr.R
 import android.content.Context
+import androidx.compose.ui.res.painterResource
 import xyz.ptgms.tosdr.viewmodels.ToSDRViewModel.DbStats
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import xyz.ptgms.tosdr.BuildConfig
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,9 +35,11 @@ fun SettingsScreen(navController: NavController, viewModel: ToSDRViewModel) {
     val database = remember { ToSDRDatabase.getDatabase(context) }
     var isLoading by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
+    var showCustomUrlDialog by remember { mutableStateOf(false) }
 
     val dbStats by viewModel.dbStats.collectAsState()
     val preferServerSearch by viewModel.preferServerSearch.collectAsState()
+    val currentBaseUrl by viewModel.baseUrl.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadDbStats(database)
@@ -49,13 +55,20 @@ fun SettingsScreen(navController: NavController, viewModel: ToSDRViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
             SearchSettings(
                 preferServerSearch = preferServerSearch,
                 onPreferServerSearchChange = { viewModel.setPreferServerSearch(context, it) }
             )
-            
+
+            ApiSettings(
+                currentBaseUrl = currentBaseUrl,
+                onBaseUrlChange = { viewModel.setBaseUrl(context, it) },
+                onShowCustomUrlDialog = { showCustomUrlDialog = true }
+            )
+
             DatabaseSettings(
                 dbStats = dbStats,
                 isLoading = isLoading,
@@ -69,11 +82,21 @@ fun SettingsScreen(navController: NavController, viewModel: ToSDRViewModel) {
                 },
                 onDeleteDatabase = { viewModel.deleteDatabase(database) }
             )
+
+            AboutAppSettings()
         }
     }
 
     if (showErrorDialog) {
         DatabaseErrorDialog(onDismiss = { showErrorDialog = false })
+    }
+
+    if (showCustomUrlDialog) {
+        CustomUrlDialog(
+            currentUrl = currentBaseUrl,
+            onUrlChange = { viewModel.setBaseUrl(context, it) },
+            onDismiss = { showCustomUrlDialog = false }
+        )
     }
 }
 
@@ -116,6 +139,63 @@ private fun SearchSettings(
                     checked = preferServerSearch,
                     onCheckedChange = onPreferServerSearchChange
                 )
+            }
+        )
+    }
+}
+
+@Composable
+private fun ApiSettings(
+    currentBaseUrl: String,
+    onBaseUrlChange: (String) -> Unit,
+    onShowCustomUrlDialog: () -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val urls = listOf(
+        "https://api.tosdr.org/",
+        "https://api.staging.tosdr.org/"
+    )
+
+    SettingsTitle(text = "API Settings")
+    SettingsGroup(modifier = Modifier.fillMaxWidth()) {
+        SettingsRow(
+            leading = { Icon(painterResource(R.drawable.ic_rounded_api_24), contentDescription = null) },
+            title = {
+                Column {
+                    Text("API Endpoint")
+                    Text(
+                        currentBaseUrl,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            },
+            trailing = {
+                Box {
+                    IconButton(onClick = { expanded = true }) {
+                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Select API endpoint")
+                    }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        urls.forEach { url ->
+                            DropdownMenuItem(
+                                text = { Text(url) },
+                                onClick = {
+                                    onBaseUrlChange(url)
+                                    expanded = false
+                                }
+                            )
+                        }
+                        DropdownMenuItem(
+                            text = { Text("Custom URL...") },
+                            onClick = {
+                                expanded = false
+                                onShowCustomUrlDialog()
+                            }
+                        )
+                    }
+                }
             }
         )
     }
@@ -243,6 +323,74 @@ private fun DatabaseActions(
                     Icons.Default.Delete,
                     contentDescription = stringResource(R.string.settings_database_delete)
                 )
+            }
+        }
+    )
+}
+
+
+@Composable
+private fun AboutAppSettings() {
+    SettingsTitle(text = stringResource(R.string.settings_about))
+    SettingsGroup(modifier = Modifier.fillMaxWidth()) {
+        SettingsRow(
+            leading = { Icon(Icons.Default.Info, contentDescription = null) },
+            title = {
+                Column {
+                    Text("ToS;DR; Version ${BuildConfig.VERSION_NAME}")
+                    Text(
+                        "You are running the variant '${BuildConfig.FLAVOR}'.",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun CustomUrlDialog(
+    currentUrl: String,
+    onUrlChange: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var url by remember { mutableStateOf(currentUrl) }
+    var error by remember { mutableStateOf<String?>(null) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Custom API URL") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = url,
+                    onValueChange = {
+                        url = it
+                        error = null
+                    },
+                    label = { Text("API URL") },
+                    isError = error != null,
+                    supportingText = error?.let { { Text(it) } }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        error = "URL must start with http:// or https://"
+                        return@TextButton
+                    }
+                    onUrlChange(url)
+                    onDismiss()
+                }
+            ) {
+                Text("Save")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
             }
         }
     )

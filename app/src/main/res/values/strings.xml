@@ -118,4 +118,5 @@
     <string name="nongplay_donation_desc">Thank you for using ToS;DR outside of the Google Play store! Your support is means a lot to us. We invite you to explore our donation options and contribute to our mission. Every bit of support is greatly appreciated!</string>
     <string name="nongplay_donation_opencollective">Support us on OpenCollective</string>
     <string name="nongplay_donation_crypto">Cryptocurrency</string>
+    <string name="settings_about">About</string>
 </resources>
