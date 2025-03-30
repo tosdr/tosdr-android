@@ -5,7 +5,13 @@ import xyz.ptgms.tosdr.api.models.ServiceBasic
 import xyz.ptgms.tosdr.api.models.ServiceDetail
 
 class ToSDRRepository {
-    private val api = ApiClient.api
+    private var api = ApiClient.api
+    
+    init {
+        ApiClient.addBaseUrlChangeListener {
+            api = ApiClient.api
+        }
+    }
     
     suspend fun searchServices(query: String): Result<List<ServiceBasic>> = try {
         Result.success(api.searchServices(query).services)

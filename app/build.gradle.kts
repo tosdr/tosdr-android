@@ -13,9 +13,9 @@ android {
     defaultConfig {
         applicationId = "xyz.ptgms.tosdr"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 41
-        versionName = "2.1.1"
+        targetSdk = 36
+        versionCode = 42
+        versionName = "2.1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

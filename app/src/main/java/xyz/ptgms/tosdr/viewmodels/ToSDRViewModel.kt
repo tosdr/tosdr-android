@@ -158,7 +158,7 @@ class ToSDRViewModel(private val dispatcher: CoroutineDispatcher = Dispatchers.I
             val prefs = context.getSharedPreferences("tosdr_prefs", Context.MODE_PRIVATE)
             _preferServerSearch.value = prefs.getBoolean("prefer_server_search", false)
             _baseUrl.value = prefs.getString("base_url", ApiClient.defaultUrl) ?: ApiClient.defaultUrl
-            ApiClient.updateBaseUrl(_baseUrl.value)
+            ApiClient.initialize(context)
         }
     }
 
